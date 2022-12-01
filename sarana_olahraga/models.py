@@ -11,6 +11,9 @@ class GOR(models.Model):
     pengurus = models.OneToOneField(
         Pengurus_GOR, on_delete=models.CASCADE, blank=True, null=True)
 
+    def getSaranaGor(self):
+        return self.sarana_set.all()
+
 
 class Sarana(models.Model):
     ID_sarana = models.TextField(primary_key=True)
@@ -19,7 +22,7 @@ class Sarana(models.Model):
     jenis = models.TextField()
     deskripsi = models.TextField()
     gor = models.ForeignKey(
-        GOR,  on_delete=models.CASCADE, blank=True, null=True)
+        GOR, on_delete=models.CASCADE, blank=True, null=True)
 
 
 class Jadwal_Reservasi(models.Model):
