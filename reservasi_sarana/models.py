@@ -20,7 +20,6 @@ class Sewa_Sarana(models.Model):
             sewa_sarana=self)
         if status == "Pembayaran terverifikasi":
             self.updateStatus("Berhasil dibayar")
-            self.save()
         detail_pembayaran.ubahStatusDetailPembayaran(status)
 
     def batalSewa(self, pembatal):
@@ -61,7 +60,7 @@ class Pembatalan_Sewa_Sarana(models.Model):
 
 class Verifikasi_Pembatalan(models.Model):
     datetime = models.DateTimeField(auto_now_add=True)
-    status = models.TextField()
+    status = models.TextField(default="Pembatalan diajukan")
     pembatalan = models.ForeignKey(
         Pembatalan_Sewa_Sarana,  on_delete=models.CASCADE, blank=True, null=True)
     pengurus = models.ForeignKey(
