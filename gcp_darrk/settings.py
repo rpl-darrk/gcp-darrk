@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     "main",
     "jadwal_reservasi",
     "mengelola_sarana_olahraga",
+    "pengguna",
 ]
 
 MIDDLEWARE = [

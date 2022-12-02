@@ -10,4 +10,4 @@ def home(request):
         } 
         return render(request, "main/home.html", context)
     else:
-        return render(request, "main/home.html")
+        return render(request, "login.html")
