@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from .models import GOR
+from django.contrib.auth.decorators import login_required
 
 
+@login_required(login_url='/login/')
 def getSaranaOlaharaga(request, ID_gor):
     if request.method == "GET":
         context = {}

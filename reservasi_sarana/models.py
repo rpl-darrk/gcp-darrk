@@ -1,6 +1,6 @@
 from django.db import models
 from sarana_olahraga.models import Sarana
-from pengguna.models import Konsumen_GOR, Pengurus_GOR
+from pengguna.models import Pengguna, Konsumen_GOR, Pengurus_GOR
 
 
 class Sewa_Sarana(models.Model):
@@ -28,7 +28,13 @@ class Sewa_Sarana(models.Model):
         verifikasi = Verifikasi_Pembatalan.objects.create(
             pembatalan=pembatalan, pengurus=self.pengurus)
 
-        if pembatal == self.pengurus:
+        try:
+            pengurus = Pengurus_GOR.objects.get(
+                user=pembatal.user)
+        except Pengurus_GOR.DoesNotExist:
+            pengurus = None
+
+        if pengurus is not None:
             verifikasi.verifikasiPembatalan()
             self.updateStatus("Batal")
 
@@ -53,7 +59,7 @@ class Pembatalan_Sewa_Sarana(models.Model):
     ID_pembatalan = models.TextField(primary_key=True)
     datetime = models.DateTimeField(auto_now_add=True)
     pembatal = models.ForeignKey(
-        Konsumen_GOR,  on_delete=models.CASCADE, blank=True, null=True)
+        Pengguna,  on_delete=models.CASCADE, blank=True, null=True)
     sewa_sarana = models.OneToOneField(
         Sewa_Sarana,  on_delete=models.CASCADE, blank=True, null=True)
 

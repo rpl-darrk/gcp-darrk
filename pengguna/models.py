@@ -1,14 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser
+from django.contrib.auth.models import User
 
 
-class Pengguna(AbstractBaseUser):
-    username = models.TextField(unique=True, primary_key=True)
-    password = models.TextField()
-    confirm_password = models.TextField()
+class Pengguna(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     nama = models.TextField()
-    email = models.EmailField(unique=True)
-    nomor_telepon = models.EmailField(unique=True)
+    nomor_telepon = models.TextField(unique=True)
 
 
 class Konsumen_GOR(Pengguna):
