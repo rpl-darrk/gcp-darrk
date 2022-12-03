@@ -1,6 +1,7 @@
 # gcp_darrk
 
-script coverage = coverage run --source=reservasi_sarana,sarana_olahraga manage.py test -v 2 && coverage report -m
+## script coverage
+"coverage run --source=reservasi_sarana,sarana_olahraga manage.py test -v 2 && coverage report -m"
 
 [![Test and Deploy][actions-badge]][commits-gh]
 [![pipeline status][pipeline-badge]][commits-gl]
