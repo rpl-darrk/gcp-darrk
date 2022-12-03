@@ -1,5 +1,7 @@
 from django.db import models
 
+from django.utils import timezone
+
 from mengelola_sarana_olahraga.models import Sarana
 
 class Status_Reservasi(models.Model):
@@ -15,6 +17,6 @@ class Status_Reservasi(models.Model):
 
 class Jadwal_Reservasi(models.Model):
     id_jadwal = models.CharField(max_length=200, primary_key=True)
-    sarana = models.ForeignKey(to=Sarana, on_delete=models.CASCADE)
+    id_sarana = models.ForeignKey(to=Sarana, on_delete=models.CASCADE, null=True)
     status = models.CharField(max_length=9, default=Status_Reservasi.VACANT)
-    datetime = models.DateField()
+    datetime = models.DateField(default=timezone.now())
