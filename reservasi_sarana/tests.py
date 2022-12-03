@@ -31,6 +31,11 @@ class ReservasiSaranaTest(TestCase):
         self.sewa_sarana = Sewa_Sarana.objects.create(
             ID_sewa="1", biaya=120000.00, sarana=self.sarana, konsumen=self.konsumen, pengurus=self.pengurus)
 
+    def test_contohDaftar(self):
+        self.client.login(username="pengurus", password="pengurus")
+        response = self.client.post("/reservasi/contoh-daftar")
+        self.assertEqual(response.status_code, 200)
+
     def test_verifikasiPembayaran(self):
         self.detail = Detail_Pembayaran.objects.create(
             sewa_sarana=self.sewa_sarana)
