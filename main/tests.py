@@ -1,6 +1,7 @@
 from django.test import LiveServerTestCase, TestCase, tag
 from django.urls import reverse
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 @tag("functional")
@@ -16,7 +17,7 @@ class FunctionalTestCase(LiveServerTestCase):
         options.headless = True  # Disable GUI.
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
-        cls.selenium = webdriver.Chrome(options=options)
+        cls.selenium = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 
     @classmethod
     def tearDownClass(cls):
