@@ -4,5 +4,5 @@ from .views import *
 app_name = "jadwal_reservasi"
 
 urlpatterns = [
-    path("<id>/", reservasi, name="reservasi"),
+    path("<id_jadwal>/", reservasi, name="reservasi"),
 ]
