@@ -6,6 +6,32 @@
 {% endblock meta %}
 
 {% block content %}
-<h1>Hello, world!</h1>
-<p><img src="{% static 'img/django-logo-negative.svg' %}"></p>
+<div class="container">
+    <div class="d-flex justify-content-center mt-5 mb-5">
+        <br>
+        <h2 style="color:#0d47a1;">Daftar Sarana GOR {{ gor.nama }}</h2>
+        <br>
+    </div>
+
+    <div class="row justify-content-center mb-5">
+        {% for sarana in daftar_sarana %}
+        <div class="col-lg-4 col-sm-6 d-flex justify-content-center mb-4">
+            <div class="card" style="width: 22rem;">
+                <img src="{% static 'img/'|add:sarana.url_foto|add:'/' %}" class="card-img-top img-thumbnail"
+                    style="height: 200px;" alt="...">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ sarana.jenis }}</h5>
+                    <p class="card-text">{{ sarana.deskripsi }}</p>
+                    <a type="button" class="btn btn-primary" href="">Reservasi</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="cart-row">
+            <div style="flex:6" class="text-center">Tidak ada Sarana.</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
 {% endblock content %}
