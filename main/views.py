@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from mengelola_sarana_olahraga.models import GOR
 
@@ -10,4 +10,4 @@ def home(request):
         } 
         return render(request, "main/home.html", context)
     else:
-        return render(request, "login.html")
+        return redirect("login")

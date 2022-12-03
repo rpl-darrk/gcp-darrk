@@ -2,10 +2,24 @@
 {% load static %}
 
 {% block meta %}
-<title>Hello, world!</title>
+<title>DARRK - Homepage</title>
 {% endblock meta %}
 
 {% block content %}
-  <h1>Hello, world!</h1>
-  <p><img src="{% static 'img/django-logo-negative.svg' %}"></p>
+  <p>Selamat Datang, {{ user.get_username }}!</p>
+  <h1>Daftar GOR</h1>
+  {% for gor in gor_list %}
+    <div class="container" style="width: 95%; margin-bottom: 5px;">
+      <div class="row">
+        <div class="col-4">
+          <a>
+            <img src="{{ gor.url_foto }}" style="max-width:100%; max-height:100%;">
+          </a>
+        </div>
+        <div class="col">
+          <p>{{ gor.nama }}</p>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
 {% endblock content %}
