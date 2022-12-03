@@ -21,5 +21,5 @@ urlpatterns = [
     path("", include("main.urls")),
     path("", include("mengelola_sarana_olahraga.urls")),
     path("", include("pengguna.urls")),
-    path("/reservasi/", include("jadwal_reservasi.urls")),
+    path("reservasi/", include("jadwal_reservasi.urls")),
 ]
