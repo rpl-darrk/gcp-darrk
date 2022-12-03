@@ -1,7 +1,7 @@
 from django.test import TestCase, Client
-from jadwal_reservasi.models import Jadwal_Reservasi, Status_Reservasi
+from .models import *
 
-def ReservasiJadwalTestCase(TestCase):
+class ReservasiJadwalTestCase(TestCase):
     def setUp(self):
         self.client = Client()
         self.jadwal_reservasi = Jadwal_Reservasi.objects.create(id_jadwal=0)
