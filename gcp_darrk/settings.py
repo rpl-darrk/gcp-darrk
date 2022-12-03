@@ -58,7 +58,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "main",
-    "pengguna"
+    "pengguna",
+    "reservasi_sarana",
+    "sarana_olahraga",
 ]
 
 MIDDLEWARE = [
