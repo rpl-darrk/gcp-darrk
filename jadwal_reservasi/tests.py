@@ -1,5 +1,5 @@
 from django.test import TestCase, Client
-from .models import *
+from jadwal_reservasi.models import Jadwal_Reservasi, Status_Reservasi
 
 class ReservasiJadwalTestCase(TestCase):
     def setUp(self):
