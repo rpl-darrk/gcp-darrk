@@ -1,8 +1,8 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-
 from .models import GOR, Sarana
 from .forms import SaranaForm
+from melihat_jadwal_reservasi.models import JadwalReservasi
 
 
 def index(request):
@@ -27,6 +27,15 @@ def post_sarana(request):
 
             sarana.id = max_id + 1
             sarana.gor = GOR.objects.get(id="1")
+
+            new_jadwal_reservasi = JadwalReservasi.objects.create(
+                hari_buka="[true, true, true, true, true, false, false]",
+                jam_buka='[["10.00", "11.00"], ["11.00", "12.00"]]',
+                status_book="[[true, true, true, true, true, true, true], [true, true, true, true, true, true, true]]",
+            )
+            new_jadwal_reservasi.save()
+
+            sarana.jadwal_reservasi = new_jadwal_reservasi
             sarana.save()
 
             return HttpResponseRedirect('/mengelola_sarana_olahraga/')

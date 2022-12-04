@@ -59,6 +59,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "main",
     "mengelola_sarana_olahraga",
+    "melihat_jadwal_reservasi",
+    "sewa_sarana",
 ]
 
 MIDDLEWARE = [

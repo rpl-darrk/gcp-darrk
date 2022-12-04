@@ -1,6 +1,8 @@
+import json
 from django.test import Client, TestCase
 from django.urls import reverse
 from mengelola_sarana_olahraga.models import GOR, Sarana
+from melihat_jadwal_reservasi.models import JadwalReservasi
 
 
 class TestViews(TestCase):
@@ -17,8 +19,15 @@ class TestViews(TestCase):
             alamat='Jalan RPL Keren Nomor 1',
             nomor_telepon='081234567890'
         )
+        self.jadwal_reservasi_1 = JadwalReservasi.objects.create(
+            hari_buka=json.loads("[true, true, true, true, true, false, false]"),
+            jam_buka=json.loads('[["10.00", "11.00"], ["11.00", "12.00"]]'),
+            status_book=json.loads(
+                "[[true, true, false, true, true, true, true], [true, true, true, true, true, true, true]]"),
+        )
         self.sarana1 = Sarana.objects.create(
             gor=self.gor1,
+            jadwal_reservasi=self.jadwal_reservasi_1,
             id='1',
             nama='Lapangan RPL Indah',
             url_foto='ristek.link/GOR-RPL-Keren',
@@ -63,6 +72,7 @@ class TestViews(TestCase):
 
         self.assertEqual(new_project.gor, self.gor1)
         self.assertEqual(new_project.id, '2')
+        self.assertEqual(new_project.jadwal_reservasi.id, 2)
         self.assertEqual(new_project.nama, 'Lapangan RPL Indah 2')
         self.assertEqual(new_project.url_foto, 'ristek.link/GOR-RPL-Keren')
         self.assertEqual(new_project.jenis, 'Lapangan Basket')

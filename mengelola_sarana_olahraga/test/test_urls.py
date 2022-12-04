@@ -2,6 +2,7 @@ from django.test import SimpleTestCase
 from django.urls import resolve, reverse
 from mengelola_sarana_olahraga.views import index, post_sarana, update_sarana, delete_sarana
 
+
 class TestUrls(SimpleTestCase):
 
     def test_index_url_is_resolved(self):
