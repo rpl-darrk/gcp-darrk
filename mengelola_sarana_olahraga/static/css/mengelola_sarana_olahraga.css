@@ -1,0 +1,202 @@
+/* Bagian Top */
+
+.d-flex{
+    display: flex;
+}
+
+.top-wrapper {
+    padding: 100px 0 100px 0;
+    color: gray;
+    text-align: center;
+}
+
+.top-wrapper h1 {
+    opacity: 0.7;
+    font-size: 45px;
+    letter-spacing: 5px;
+    margin-bottom: 10px;
+    color: #564df7;
+}
+
+.top-wrapper h2 {
+    opacity: 0.7;
+    letter-spacing: 5px;
+    margin-bottom: 10px;
+    color: #3f36f1;
+}
+
+.top-wrapper p {
+    opacity: 0.7;
+    margin-bottom: 3px;
+}
+
+.application-text{
+    max-width: 1170px;
+    width: 50%;
+    padding-right: 100px;
+    margin: 0 auto;
+}
+
+.application{
+    max-width: 1170px;
+    width: 50%;
+    padding: 0 15px;
+    margin: 0 auto 0;
+}
+
+.application img{
+    height: 275px;
+}
+
+
+.btn {
+    padding: 12px 24px;
+    color: white;
+    display: inline-block;
+    opacity: 0.8;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.btn:hover {
+    opacity: 1;
+}
+
+/* Bagian Service*/
+.service-wrapper {
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 40px;
+    text-align: center;
+}
+
+.heading {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #5f5d60;
+}
+
+.heading h2 {
+    font-weight: normal;
+    font-size: 40px;
+}
+
+.service {
+    float: left;
+    padding-bottom: 50px;
+    width: 50%;
+}
+
+.service img{
+    height: 150px;
+}
+
+.text-contents {
+    width: 80%;
+    display: inline-block;
+    margin-top: 15px;
+    font-size: 15px;
+    color: #b3aeb5;
+}
+
+.col > p {
+    margin: auto;
+}
+
+.card-title, .card-text {
+    margin: 15px;
+}
+
+.card-cover {
+    flex: 0 0 auto;
+    width: 33.33333333%;
+}
+
+.card-text {
+    text-align: justify;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+}
+
+.list-sarana {
+    justify-content: center;
+}
+
+/* Untuk Tablet */
+@media all and (max-width: 1000px) {
+    .service {
+        width: 100%;
+        margin-bottom: 50px;
+    }
+
+    .top-wrapper {
+        flex-direction: column;
+    }
+
+    .application-text{
+        width: 100%;
+        padding: 0 10px;
+        text-align: center;
+    }
+
+    .application{
+        width: 100%;
+        text-align: center;
+    }
+
+    .top-wrapper h1 {
+        font-size: 32px;
+    }
+
+    .heading h2 {
+        font-size: 20px;
+    }
+
+    .card-cover {
+        flex: 0 0 auto;
+        width: 50%;
+    }
+}
+
+/* Untuk Smartphone */
+@media all and (max-width: 750px) {
+    .top-wrapper{
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .top-wrapper h1 {
+        font-size: 30px;
+        line-height: 36px;
+    }
+
+    .top-wrapper h2 {
+        font-size: 16px;
+        line-height: 36px;
+        }
+
+    .top-wrapper p {
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .application img{
+        width: 100%;
+    }
+
+    .service {
+        width: 100%;
+    }
+
+    .service img{
+        max-height: 300px;
+    }
+
+    .card-cover {
+        flex: 0 0 auto;
+        width: 80%;
+    }
+}

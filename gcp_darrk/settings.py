@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "main",
+    "mengelola_sarana_olahraga",
 ]
 
 MIDDLEWARE = [
