@@ -22,4 +22,6 @@ urlpatterns = [
     path("", include("mengelola_sarana_olahraga.urls")),
     path("", include("pengguna.urls")),
     path("reservasi/", include("jadwal_reservasi.urls")),
+    path("", include("reservasi_sarana.urls")),
+    path("", include("sarana_olahraga.urls")),
 ]
