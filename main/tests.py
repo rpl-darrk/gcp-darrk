@@ -2,7 +2,11 @@ from django.test import LiveServerTestCase, TestCase, tag
 from django.urls import reverse
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
+from django.contrib.auth.models import User
 
+class MainAuthenticateBeforeAccess(TestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(username="foo", password="bar")
 
 @tag("functional")
 class FunctionalTestCase(LiveServerTestCase):
@@ -26,17 +30,7 @@ class FunctionalTestCase(LiveServerTestCase):
 
 
 class MainTestCase(TestCase):
-    def test_root_url_status_200(self):
+    def test_authenticate_response(self):
+        self.client.login(username="foo", password="bar")
         response = self.client.get("/")
-        self.assertEqual(response.status_code, 200)
-        # You can also use path names instead of explicit paths.
-        response = self.client.get(reverse("main:home"))
-        self.assertEqual(response.status_code, 200)
-
-
-class MainFunctionalTestCase(FunctionalTestCase):
-    def test_root_url_exists(self):
-        self.selenium.get(f"{self.live_server_url}/")
-        html = self.selenium.find_element_by_tag_name("html")
-        self.assertNotIn("not found", html.text.lower())
-        self.assertNotIn("error", html.text.lower())
+        assert(response.status_code.__eq__(200))

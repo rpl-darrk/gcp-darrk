@@ -21,4 +21,8 @@ urlpatterns = [
     path("", include("main.urls")),
     path("mengelola_sarana_olahraga/", include("mengelola_sarana_olahraga.urls")),
     path("melihat_jadwal_reservasi/", include("melihat_jadwal_reservasi.urls"))
+    path("", include("pengguna.urls")),
+    path("reservasi/", include("jadwal_reservasi.urls")),
+    path("", include("reservasi_sarana.urls")),
+    path("", include("sarana_olahraga.urls")),
 ]

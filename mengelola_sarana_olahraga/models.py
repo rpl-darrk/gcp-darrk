@@ -1,7 +1,6 @@
 from django.db import models
 from melihat_jadwal_reservasi.models import JadwalReservasi
 
-
 class GOR(models.Model):
     id = models.CharField(max_length=200, primary_key=True)
     nama = models.CharField(max_length=200)

@@ -3,15 +3,24 @@ from django.shortcuts import render
 from .models import GOR, Sarana
 from .forms import SaranaForm
 from melihat_jadwal_reservasi.models import JadwalReservasi
+from mengelola_sarana_olahraga.models import GOR, Sarana
 
-
-def index(request):
+def indexDimas(request):
     sarana_list = Sarana.objects.all()
     context = {
         'sarana_list': sarana_list
     }
     return render(request, "mengelola_sarana_olahraga/index.html", context)
 
+def index(request):
+    GORs = GOR.objects.all()
+    saranas = Sarana.objects.all()
+    print(GORs)
+    context = {
+        'GORs':GORs,
+        'Saranas':saranas
+    }
+    return render(request, "index.html", context)
 
 def post_sarana(request):
     if request.method == 'POST':

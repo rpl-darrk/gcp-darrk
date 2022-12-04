@@ -2,10 +2,100 @@
 {% load static %}
 
 {% block meta %}
-<title>Hello, world!</title>
 {% endblock meta %}
 
 {% block content %}
-  <h1>Hello, world!</h1>
-  <p><img src="{% static 'img/django-logo-negative.svg' %}"></p>
+<div class='jumbotron justify-content-center' style="background-color:#e3fde6;">
+  <div class="row mx-5">
+    <div class="col-lg-6">
+      <h2 class="mt-5">Selamat Datang di Gor Center Platform, {{ user.get_username }}!</h2>
+      <h4 class="mb-5">Akses informasi kesehatan yang dibutuhkan dengan cepat dan efektif.</h4>
+    </div>
+  </div>
+</div>
+
+<div class="d-flex justify-content-center mt-5 mb-5">
+  <br>
+  <h2 style="color:#0da126;">Fitur GCP</h2>
+  <br>
+</div>
+
+<div class="container text-center mb-3">
+  <div class="row justify-content-around mt-2">
+
+    <div class="col-lg-4 col-sm-6 d-flex justify-content-center mb-3">
+      <div class="card mx-auto" style="border-color:#0da126; max-width: 18rem;">
+        <div class="card-header text-center text-white" style="background-color:#0da126;">Daftar GOR</div>
+        <div class="card-body text-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="3rem" height="3rem" fill="currentColor" class="bi bi-view-list"
+            viewBox="0 0 16 16">
+            <path
+              d="M3 4.5h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H3zM1 2a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 2zm0 12a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 14z" />
+          </svg>
+          <p class="card-text my-3">Lihat daftar GOR yang tersedia pada GCP.</p>
+          <a th:href="@{/}" class="btn btn-sm btn-outline-success">Lihat Daftar</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-6 d-flex justify-content-center mb-3">
+      <div class="card mx-auto" style="border-color:#0da126; max-width: 18rem;">
+        <div class="card-header text-center text-white" style="background-color:#0da126;">Daftar Reservasi</div>
+        <div class="card-body text-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="3rem" height="3rem" fill="currentColor" class="bi bi-bookmarks"
+            viewBox="0 0 16 16">
+            <path
+              d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4zm2-1a1 1 0 0 0-1 1v10.566l3.723-2.482a.5.5 0 0 1 .554 0L11 14.566V4a1 1 0 0 0-1-1H4z" />
+            <path
+              d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1z" />
+          </svg>
+          <p class="card-text my-3">Lihat daftar riwayat reservasi yang dibuat.</p>
+          <a th:href="@{/}" class="btn btn-sm btn-outline-success">Lihat Daftar</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<br>
+<hr>
+
+<div class='container text-center justify-content-center my-5'>
+  <div class="row align-items-center">
+    <div class="col-lg-4 text-left">
+      <h2 class="text-center" style="color:#0da126;">Tentang Gor Center Platform</h2>
+    </div>
+    <div class="col-lg-1"></div>
+    <div class="col-lg-7 text-right" style="line-height:2;">
+      <p>
+        GCP - GOR Center Platform adalah perangkat lunak berupa aplikasi web yang dapat mempermudah proses reservasi
+        sarana olahraga di GOR. GCP merupakan aplikasi yang dapat mempersingkat langkah yang dibutuhkan untuk memperoleh
+        atau memberi informasi, memperjelas informasi jadwal dengan penyediaan gambaran visual, memperlancar flow
+        pekerjaan dengan digitalisasi dan otomatisasi, dan mengurangi potensi kerugian akibat customer yang kurang
+        bertanggung jawab.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class='container'>
+  <h1>Daftar GOR</h1>
+  {% for gor in gor_list %}
+  <div class="container" style="width: 95%; margin-bottom: 5px;">
+    <div class="row">
+      <div class="col-4">
+        <a>
+          <img src="{{ gor.url_foto }}" style="max-width:100%; max-height:100%;">
+        </a>
+      </div>
+      <div class="col">
+        <p>{{ gor.nama }}</p>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
 {% endblock content %}

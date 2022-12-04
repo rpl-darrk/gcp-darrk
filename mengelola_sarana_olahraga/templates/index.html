@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <title>Hello, Maba!</title>
+{% endblock meta %}
+
+{% block content %}
+    <h1>Hello, world!</h1>
+    <p><img src="{% static 'img/django-logo-negative.svg' %}"></p>
+    <p>HAIYAA</p>
+    {% for Sarana in Saranas %}
+        <h3>Jenis Sarana: {{ Sarana.id_gor }}</h3>
+        <h3>Jenis Sarana: {{ Sarana.jenis }}</h3>
+        <h3>Deskripsi Sarana: {{ Sarana.deskripsi }}</h3>
+        <h3>Url foto: {{ Sarana.url_foto }}</h3>
+        <a href="#" class="btn">
+            <img src="{{ Sarana.url_foto }}" height="50px">
+        </a>
+        <hr>
+    {% endfor %}
+
+{% endblock content %}
