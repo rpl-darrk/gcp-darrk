@@ -4,12 +4,11 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse, JsonResponse
 
-from .models import Pengguna, Konsumen_GOR, Pengurus_GOR
+from .models import Konsumen_GOR, Pengurus_GOR
 
 
-def user_login(request):
+def userLogin(request):
 
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -18,10 +17,10 @@ def user_login(request):
 
         if user is not None:
 
-            if Konsumen_GOR.objects.get(user=user) is not None:
+            try:
                 account = Konsumen_GOR.objects.get(user=user)
                 msg = "{nama} berhasil login".format(nama=account.nama)
-            else:
+            except:
                 account = Pengurus_GOR.objects.get(user=user)
                 msg = "{nama} berhasil login".format(nama=account.nama)
 
@@ -35,6 +34,6 @@ def user_login(request):
     return render(request, 'login.html', context)
 
 
-def user_logout(request):
+def userLogout(request):
     logout(request)
     return redirect('login')

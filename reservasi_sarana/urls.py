@@ -13,4 +13,5 @@ urlpatterns = [
          views.verifikasiPembatalan, name="verifikasi_pembatalan"),
     path("reservasi/pembatalan/<str:ID_sewa>",
          views.pembatalanReservasi, name="pembatalan"),
+    path("reservasi/riwayat-reservasi", views.cekRiwayatReservasi, name="cek_riwayat_reservasi"),
 ]

@@ -38,10 +38,10 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Jadwal_Reservasi',
             fields=[
-                ('ID_jadwal', models.TextField(primary_key=True, serialize=False)),
-                ('status', models.TextField()),
-                ('datetime', models.DateTimeField()),
-                ('sarana', models.OneToOneField(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='sarana_olahraga.sarana')),
+                ('ID_jadwal', models.AutoField(primary_key=True, serialize=False)),
+                ('hari_buka', models.JSONField()),
+                ('jam_buka', models.JSONField()),
+                ('status_book', models.JSONField()),
             ],
         ),
     ]

@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.http.response import HttpResponseRedirect
 from .models import *
-from pengguna.models import Pengguna
+from pengguna.models import Pengguna, Konsumen_GOR
 from django.contrib.auth.decorators import login_required
+from pengguna.models import 
 
 
 @login_required(login_url='/login/')
@@ -43,3 +44,22 @@ def verifikasiPembatalan(request, ID_sewa):
         sewa_sarana.updateStatus(Status_Sewa_Sarana.CANCELLED)
         verifikasi_pembatalan.verifikasiPembatalan()
         return HttpResponseRedirect('../contoh-daftar')
+
+@login_required(login_url='/login/')
+def cekRiwayatReservasi(request):
+
+    context = {}
+
+    if request.method == "GET":
+        konsumen = Konsumen_GOR.objects.get(user=request.user)
+        reservasi = Sewa_Sarana.objects.filter(konsumen=konsumen)
+
+        list_reservasi = []
+        for i in range(len(reservasi)):
+            list_reservasi += [reservasi[i].ID_sewa]
+
+        context = {
+            'list_reservasi': list_reservasi
+        }
+
+        return render(request, 'riwayat_reservasi.html', context)

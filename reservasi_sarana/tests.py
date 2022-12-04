@@ -8,6 +8,7 @@ from sarana_olahraga.models import *
 class ReservasiSaranaTest(TestCase):
     def setUp(self) -> None:
         self.client = Client()
+
         self.user_konsumen = User.objects.create_user(
             email="konsumen@email.com",
             username="konsumen",
@@ -26,11 +27,15 @@ class ReservasiSaranaTest(TestCase):
 
         self.gor = GOR.objects.create(ID_gor="1",  nama="nama",
                                       url_foto="url_foto", alamat="alamat", no_telepon="no_telepon", pengurus=self.pengurus)
+        
+        self.jadwal_reservasi = Jadwal_Reservasi.objects.create(hari_buka="[]", jam_buka="[[]]", status_book="[[]]")
+        
         self.sarana = Sarana.objects.create(ID_sarana="1",  nama="nama",
-                                            url_foto="url_foto", jenis="jenis", deskripsi="deskripsi", gor=self.gor)
+                                            url_foto="url_foto", jenis="jenis", deskripsi="deskripsi", gor=self.gor, id_jadwal=self.jadwal_reservasi)
+                
         self.sewa_sarana = Sewa_Sarana.objects.create(
             ID_sewa="1", biaya=120000.00, sarana=self.sarana, konsumen=self.konsumen, pengurus=self.pengurus)
-
+        
     def test_contohDaftar(self):
         self.client.login(username="pengurus", password="pengurus")
         response = self.client.post("/reservasi/contoh-daftar")
@@ -100,3 +105,8 @@ class ReservasiSaranaTest(TestCase):
         self.assertEqual(self.verifikasi.status,
                          str(Status_Verifikasi_Pembatalan.VERIFIED))
         self.assertEqual(response.status_code, 302)
+        
+    def testCekRiwayatReservasi(self):
+        self.client.login(username="konsumen", password="konsumen")
+        response = self.client.get("/reservasi/riwayat-reservasi")
+        self.assertEqual(response.status_code, 200)
