@@ -31,11 +31,3 @@ class MainTestCase(TestCase):
         # You can also use path names instead of explicit paths.
         response = self.client.get(reverse("main:home"))
         self.assertEqual(response.status_code, 200)
-
-
-class MainFunctionalTestCase(FunctionalTestCase):
-    def test_root_url_exists(self):
-        self.selenium.get(f"{self.live_server_url}/")
-        html = self.selenium.find_element_by_tag_name("html")
-        self.assertNotIn("not found", html.text.lower())
-        self.assertNotIn("error", html.text.lower())

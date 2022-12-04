@@ -13,10 +13,10 @@ def userLogin(request):
 
         if user is not None:
 
-            if Konsumen_GOR.objects.get(user=user) is not None:
+            try:
                 account = Konsumen_GOR.objects.get(user=user)
                 msg = "{nama} berhasil login".format(nama=account.nama)
-            else:
+            except:
                 account = Pengurus_GOR.objects.get(user=user)
                 msg = "{nama} berhasil login".format(nama=account.nama)
 

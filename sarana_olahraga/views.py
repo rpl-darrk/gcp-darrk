@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponseForbidden
 from json import JSONEncoder
 
 import json
 
 from .models import Jadwal_Reservasi, Sarana
+from pengguna.models import Pengurus_GOR
 
 def initTabelJadwal():
 
@@ -17,10 +19,17 @@ def initTabelJadwal():
         status_book=JSONEncoder().encode(status_book)
     )
 
-    return new_jadwal.save()
+    new_jadwal.save()
+
+    return new_jadwal
 
 
 def updateTabelJadwal(request, id_sarana):
+
+    try:
+        Pengurus_GOR.objects.get(user=request.user)
+    except:
+        return HttpResponseForbidden()
 
     if request.method == 'POST':
 
@@ -58,4 +67,4 @@ def showTabelJadwal(request, id_sarana):
             'book': jadwal.status_book
         }
 
-    return render(request, '', context)
+    return render(request, 'tabel_jadwal.html', context)
