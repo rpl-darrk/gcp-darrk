@@ -1,5 +1,5 @@
 from django import forms
-from reservasi_sarana.models import Detail_Pembayaran
+from testmodels.models import *
 from django.contrib.auth.models import User
 
 class UploadBuktiPembayaranForm(forms.ModelForm):
