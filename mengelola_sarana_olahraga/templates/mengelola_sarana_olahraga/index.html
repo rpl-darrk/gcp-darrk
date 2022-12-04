@@ -1,0 +1,44 @@
+{% extends 'mengelola_sarana_olahraga/base.html' %}
+{% load static %}
+
+{% block meta %}
+    <title>Hello, Maba!</title>
+    {% include 'mengelola_sarana_olahraga/css.html' %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock meta %}
+
+{% block content %}
+    <div>
+        <a href="/mengelola_sarana_olahraga/post_sarana/" class="btn btn-primary">Tambah Sarana Olahraga</a>
+    </div>
+    <div class="row list-sarana">
+        {% for sarana in sarana_list %}
+            <div class="card-cover" style="margin: 5px 0;">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{sarana.nama}}</h5>
+                        <div class="row mb-3">
+                            <div class="col border border-2 rounded-start">
+                                <p class="">Jenis Sarana</p>
+                                <p class="">{{sarana.jenis}}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <a href="#">
+                                <img src="{{sarana.url_foto}}" width="100%">
+                            </a>
+                        </div>
+                        <div class="row my-3 ">
+                            <div class="col border border-2 rounded-start">
+                                <p class="card-text">Deskripsi: </p>
+                                <p class="card-text">{{sarana.deskripsi}}</p>
+                            </div>
+                        </div>
+                        <a href="/mengelola_sarana_olahraga/update_sarana/{{sarana.id}}" class="btn btn-success">Ubah</a>
+                        <a href="/mengelola_sarana_olahraga/delete_sarana/{{sarana.id}}" class="btn btn-danger">Hapus</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

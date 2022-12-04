@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "main",
+    "melihat_jadwal_reservasi",
     "jadwal_reservasi",
     "mengelola_sarana_olahraga",
     "pengguna",
