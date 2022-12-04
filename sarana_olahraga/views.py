@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseForbidden
 from json import JSONEncoder
+from django.contrib.auth.decorators import login_required
 
 import json
 
-from .models import Jadwal_Reservasi, Sarana
+from .models import GOR, Jadwal_Reservasi, Sarana
 from pengguna.models import Pengurus_GOR
 
 def initTabelJadwal():
@@ -68,3 +69,11 @@ def showTabelJadwal(request, id_sarana):
         }
 
     return render(request, 'tabel_jadwal.html', context)
+
+@login_required(login_url='/login/')
+def getSaranaOlaharaga(request, ID_gor):
+    if request.method == "GET":
+        context = {}
+        gor, created = GOR.objects.get_or_create(ID_gor=ID_gor)
+        context = {"gor": gor, "daftar_sarana": gor.getSaranaGor()}
+        return render(request, "sarana_olahraga.html", context)

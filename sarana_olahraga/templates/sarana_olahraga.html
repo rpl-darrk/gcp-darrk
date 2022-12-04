@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Hello, world!</title>
+{% endblock meta %}
+
+{% block content %}
+<div class="container card mt-4" style="border-color:#b4f9bc;">
+    <div class="d-flex justify-content-center my-4">
+        <br>
+        <h2 style="color:#0da126;">Daftar Sarana GOR {{ gor.nama }}</h2>
+        <br>
+    </div>
+
+    <div class="row justify-content-center mb-5 mx-4">
+        {% for sarana in daftar_sarana %}
+        <!-- <div class="col-lg-4 col-sm-6 d-flex justify-content-center mb-4">
+            <div class="card" style="border-color:#0da126; width: 22rem;">
+                <img src={{sarana.url_foto}} class="card-img-top img-thumbnail"
+                    style="border-color:#0da126; height: 200px;" alt="...">
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ sarana.nama }}</h5>
+                    <p class="card-text">Jenis Sarana: {{ sarana.jenis }}</p>
+                    <a type="button" class="btn btn-outline-success" href="">Reservasi</a>
+                </div>
+            </div>
+        </div> -->
+        <div class="card mb-3 col-12 px-0" style="border-color:#0da126;">
+            <div class="row g-0">
+                <div class="col-lg-3 col-12">
+                    <img src={{sarana.url_foto}} class="img-fluid rounded-start"
+                        style="border-color:#0da126; height: 200px;" alt="...">
+                    <!-- <img src="{% static 'img/'|add:sarana.url_foto|add:'/' %}" class="img-thumbnail rounded"
+                        style="border-color:#0da126; height: 100%; width: 100%;" alt="..."> -->
+                </div>
+                <div class="col-lg-9 col-12">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ sarana.nama }}</h5>
+                        <p class="card-text">
+                            <small class="text-muted">Jenis Sarana: {{ sarana.jenis }}</small>
+                        </p>
+                        <p class="card-text">{{ sarana.deskripsi }}</p>
+                    </div>
+                    <div class="card-body text-center">
+                        <a type="button" class="btn btn-outline-success" href="">Reservasi</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="cart-row">
+            <div style="flex:6" class="text-center">Tidak ada Sarana.</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}
