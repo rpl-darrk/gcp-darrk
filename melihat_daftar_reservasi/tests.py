@@ -1,7 +1,9 @@
 from django.test import TestCase, Client
 from .views import *
 from .models import *
-from testmodels.models import *
+from pengguna.models import *
+from sarana_olahraga.models import *
+from reservasi_sarana.models import *
 
 class LihatDaftarReservasi(TestCase):
     def setUp(self) -> None:

@@ -58,7 +58,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "main",
-    "testmodels",
     "melakukan_pembayaran_reservasi",
     "melihat_daftar_reservasi",
     "melihat_informasi_gor"

@@ -3,9 +3,8 @@ from django.http import response
 from django.http.response import Http404, HttpResponseBadRequest, HttpResponseForbidden, HttpResponseNotAllowed, HttpResponseRedirect, HttpResponse, JsonResponse
 from django.contrib.auth.models import User
 from django.shortcuts import render
-# from pengguna.models import Pengurus_GOR
-# from reservasi_sarana.models import Sewa_Sarana
-from testmodels.models import *
+from pengguna.models import Pengurus_GOR
+from reservasi_sarana.models import Sewa_Sarana
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
