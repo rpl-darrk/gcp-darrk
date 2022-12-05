@@ -6,20 +6,25 @@ from django.contrib.auth.decorators import login_required
 from pengguna.models import *
 from .forms import UploadBuktiPembayaranForm
 from datetime import datetime
+from django.views.decorators.csrf import csrf_exempt
 
 
+@csrf_exempt
 @login_required(login_url='/login/')
-def verifikasiPembayaran(request, ID_sewa):
+def verifikasiPembayaran(request):
     if request.method == "POST":
+        ID_sewa = request.POST.get('ID_sewa', None)
         sewa_sarana, created = Sewa_Sarana.objects.get_or_create(
             ID_sewa=ID_sewa)
         sewa_sarana.ubahStatusPembayaran(Status_Detail_Pembayaran.VERIFIED)
         return HttpResponseRedirect('../../daftar-reservasi')
 
 
+@csrf_exempt
 @login_required(login_url='/login/')
-def pembatalanReservasi(request, ID_sewa):
+def pembatalanReservasi(request):
     if request.method == "POST":
+        ID_sewa = request.POST.get('ID_sewa', None)
         sewa_sarana, created = Sewa_Sarana.objects.get_or_create(
             ID_sewa=ID_sewa)
         pengguna = Pengguna.objects.get(
@@ -33,9 +38,11 @@ def pembatalanReservasi(request, ID_sewa):
             return HttpResponseRedirect('../riwayat-reservasi')
 
 
+@csrf_exempt
 @login_required(login_url='/login/')
-def verifikasiPembatalan(request, ID_sewa):
+def verifikasiPembatalan(request):
     if request.method == "POST":
+        ID_sewa = request.POST.get('ID_sewa', None)
         sewa_sarana, created = Sewa_Sarana.objects.get_or_create(
             ID_sewa=ID_sewa)
         pembatalan, created = Pembatalan_Sewa_Sarana.objects.get_or_create(

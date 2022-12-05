@@ -62,8 +62,12 @@ class ReservasiSaranaTest(TestCase):
         self.detail = Detail_Pembayaran.objects.create(
             sewa_sarana=self.sewa_sarana)
 
+        data = {
+            'ID_sewa': 1
+        }
+
         self.client.login(username="pengurus", password="pengurus")
-        response = self.client.post("/reservasi/verifikasi-pembayaran/1")
+        response = self.client.post("/reservasi/verifikasi-pembayaran", data)
 
         self.sewa_sarana = Sewa_Sarana.objects.get(ID_sewa="1")
         self.detail = Detail_Pembayaran.objects.get(
@@ -76,8 +80,11 @@ class ReservasiSaranaTest(TestCase):
         self.assertEqual(response.status_code, 302)
 
     def test_pembatalanReservasiPengurus(self):
+        data = {
+            'ID_sewa': 1
+        }
         self.client.login(username="pengurus", password="pengurus")
-        response = self.client.post("/reservasi/pembatalan/1")
+        response = self.client.post("/reservasi/pembatalan", data)
 
         self.sewa_sarana = Sewa_Sarana.objects.get(ID_sewa="1")
         self.pembatalan, created = Pembatalan_Sewa_Sarana.objects.get_or_create(
@@ -92,8 +99,11 @@ class ReservasiSaranaTest(TestCase):
         self.assertEqual(response.status_code, 302)
 
     def test_pembatalanReservasiKonsumen(self):
+        data = {
+            'ID_sewa': 1
+        }
         self.client.login(username="konsumen", password="konsumen")
-        response = self.client.post("/reservasi/pembatalan/1")
+        response = self.client.post("/reservasi/pembatalan", data)
 
         self.pembatalan, created = Pembatalan_Sewa_Sarana.objects.get_or_create(
             sewa_sarana=self.sewa_sarana)
@@ -106,12 +116,15 @@ class ReservasiSaranaTest(TestCase):
 
     def test_verifikasiPembatalan(self):
         self.pembatalan = Pembatalan_Sewa_Sarana.objects.create(
-            ID_pembatalan="1", pembatal=self.konsumen, sewa_sarana=self.sewa_sarana)
+            pembatal=self.konsumen, sewa_sarana=self.sewa_sarana)
         self.verifikasi = Verifikasi_Pembatalan.objects.create(
             pembatalan=self.pembatalan, pengurus=self.pengurus)
 
+        data = {
+            'ID_sewa': 1
+        }
         self.client.login(username="pengurus", password="pengurus")
-        response = self.client.post("/reservasi/verifikasi-pembatalan/1")
+        response = self.client.post("/reservasi/verifikasi-pembatalan", data)
 
         self.sewa_sarana = Sewa_Sarana.objects.get(ID_sewa="1")
         self.verifikasi = Verifikasi_Pembatalan.objects.get(

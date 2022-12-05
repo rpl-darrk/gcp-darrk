@@ -5,11 +5,11 @@ from . import views
 app_name = "reservasi_sarana"
 
 urlpatterns = [
-    path("reservasi/verifikasi-pembayaran/<str:ID_sewa>",
+    path("reservasi/verifikasi-pembayaran",
          views.verifikasiPembayaran, name="verifikasi_pembayaran"),
-    path("reservasi/verifikasi-pembatalan/<str:ID_sewa>",
+    path("reservasi/verifikasi-pembatalan",
          views.verifikasiPembatalan, name="verifikasi_pembatalan"),
-    path("reservasi/pembatalan/<str:ID_sewa>",
+    path("reservasi/pembatalan",
          views.pembatalanReservasi, name="pembatalan"),
     path("reservasi/riwayat-reservasi",
          views.cekRiwayatReservasi, name="cek_riwayat_reservasi"),

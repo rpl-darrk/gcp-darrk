@@ -99,7 +99,6 @@ class Detail_Pembayaran(models.Model):
 
 
 class Pembatalan_Sewa_Sarana(models.Model):
-    ID_pembatalan = models.TextField(primary_key=True)
     datetime = models.DateTimeField(auto_now_add=True)
     pembatal = models.ForeignKey(
         Pengguna,  on_delete=models.CASCADE, blank=True, null=True)
