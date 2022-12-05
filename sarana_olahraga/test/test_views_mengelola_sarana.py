@@ -76,14 +76,14 @@ class TestViews(TestCase):
             'jenis': 'Lapangan Basket',
             'deskripsi': 'Lapangan RPL Indah merupakan lapangan kedua yang ada di GOR RPL Keren'
         })
-        new_project = Sarana.objects.get(id__exact=2)
+        new_project = Sarana.objects.get(ID_sarana__exact=2)
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(len(Sarana.objects.all()), 2)
 
         self.assertEqual(new_project.gor, self.gor1)
-        self.assertEqual(new_project.id, '2')
-        self.assertEqual(new_project.id_jadwal_reservasi.id, 2)
+        self.assertEqual(new_project.ID_sarana, '2')
+        self.assertEqual(new_project.id_jadwal_reservasi.ID_jadwal, 2)
         self.assertEqual(new_project.nama, 'Lapangan RPL Indah 2')
         self.assertEqual(new_project.url_foto, 'ristek.link/GOR-RPL-Keren')
         self.assertEqual(new_project.jenis, 'Lapangan Basket')
@@ -125,13 +125,13 @@ class TestViews(TestCase):
             'jenis': 'Lapangan Basket',
             'deskripsi': 'Lapangan RPL Indah merupakan lapangan pertama yang ada di GOR RPL Keren'
         })
-        new_project = Sarana.objects.get(id__exact=1)
+        new_project = Sarana.objects.get(ID_sarana__exact=1)
 
         self.assertEqual(response.status_code, 302)
         self.assertEqual(len(Sarana.objects.all()), 1)
 
         self.assertEqual(new_project.gor, self.gor1)
-        self.assertEqual(new_project.id, '1')
+        self.assertEqual(new_project.ID_sarana, '1')
         self.assertEqual(new_project.nama, 'Lapangan RPL Indah 1')
         self.assertEqual(new_project.url_foto, 'ristek.link/GOR-RPL-Keren')
         self.assertEqual(new_project.jenis, 'Lapangan Basket')

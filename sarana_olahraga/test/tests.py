@@ -24,10 +24,17 @@ class SaranaOlahragaTest(TestCase):
         self.pengurus = Pengurus_GOR.objects.create(
             user=self.user_pengurus, nama="pengurus", nomor_telepon="67890", akun_bank="0123124213")
 
-        self.jadwal_reservasi = initTabelJadwal()
+        self.gor = GOR.objects.create(ID_gor="1",  nama="nama",
+                                 url_foto="url_foto", alamat="alamat", nomor_telepon="no_telepon", pengurus=self.pengurus)
 
-        self.sarana = Sarana.objects.create(
-            ID_sarana="1", id_jadwal_reservasi=self.jadwal_reservasi)
+        self.jadwal_1 = initTabelJadwal()
+
+        self.jadwal_2 = initTabelJadwal()
+
+        self.sarana = Sarana.objects.create(ID_sarana="1",  nama="nama",
+                                            url_foto="url_foto", jenis="jenis", deskripsi="deskripsi", gor=self.gor, id_jadwal_reservasi=self.jadwal_1)
+        self.sarana_2 = Sarana.objects.create(ID_sarana="2",  nama="nama",
+                                              url_foto="url_foto", jenis="jenis", deskripsi="deskripsi", gor=self.gor, id_jadwal_reservasi=self.jadwal_2)
 
     def testInitTabelJadwalCreateNewInstance(self):
         hari_buka = []
@@ -55,32 +62,9 @@ class SaranaOlahragaTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
     def test_getSaranaOlaharaga(self):
-        user = User.objects.create_user(
-            email="user@email.com",
-            username="username",
-            password="password",
-        )
-
-        pengurus = Pengurus_GOR.objects.create(
-            user=user, nama="pengurus", nomor_telepon="67890", akun_bank="0123124213")
-
-        gor = GOR.objects.create(ID_gor="1",  nama="nama",
-                                 url_foto="url_foto", alamat="alamat", no_telepon="no_telepon", pengurus=pengurus)
-
-        self.jadwal_1 = Jadwal_Reservasi.objects.create(
-            hari_buka="[]", jam_buka="[[]]", status_book="[[]]")
-
-        self.jadwal_2 = Jadwal_Reservasi.objects.create(
-            hari_buka="[]", jam_buka="[[]]", status_book="[[]]")
-
-        Sarana.objects.create(ID_sarana="1",  nama="nama",
-                              url_foto="url_foto", jenis="jenis", deskripsi="deskripsi", gor=gor, id_jadwal_reservasi=self.jadwal_1)
-        Sarana.objects.create(ID_sarana="2",  nama="nama",
-                              url_foto="url_foto", jenis="jenis", deskripsi="deskripsi", gor=gor, id_jadwal_reservasi=self.jadwal_2)
-
-        self.client.login(username="username", password="password")
+        self.client.login(username="konsumen", password="konsumen")
         response = self.client.get("/sarana/1")
         print(response)
 
-        self.assertEqual(len(gor.getSaranaGor()), 2)
+        self.assertEqual(len(self.gor.getSaranaGor()), 2)
         self.assertEqual(response.status_code, 200)

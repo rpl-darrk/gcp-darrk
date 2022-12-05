@@ -33,11 +33,11 @@ def post_sarana(request):
             list_sarana = Sarana.objects.all()
             max_id = 0
             for saranaX in list_sarana:
-                if int(saranaX.id) > max_id:
-                    max_id = int(saranaX.id)
+                if int(saranaX.ID_sarana) > max_id:
+                    max_id = int(saranaX.ID_sarana)
 
-            sarana.id = max_id + 1
-            sarana.gor = GOR.objects.get(id="1")
+            sarana.ID_sarana = max_id + 1
+            sarana.gor = GOR.objects.get(ID_gor="1")
 
             new_jadwal_reservasi = Jadwal_Reservasi.objects.create(
                 hari_buka="[true, true, true, true, true, false, false]",
@@ -46,7 +46,7 @@ def post_sarana(request):
             )
             new_jadwal_reservasi.save()
 
-            sarana.jadwal_reservasi = new_jadwal_reservasi
+            sarana.id_jadwal_reservasi = new_jadwal_reservasi
             sarana.save()
 
             return HttpResponseRedirect('/mengelola_sarana_olahraga/')
@@ -57,7 +57,7 @@ def post_sarana(request):
 
 
 def update_sarana(request, id_sarana):
-    sarana = Sarana.objects.filter(id=id_sarana).first()
+    sarana = Sarana.objects.filter(ID_sarana=id_sarana).first()
     if sarana is not None:
         if request.method == 'POST':
             form = SaranaForm(request.POST, instance=sarana)
@@ -73,7 +73,7 @@ def update_sarana(request, id_sarana):
 
 
 def delete_sarana(request, id_sarana):
-    sarana = Sarana.objects.filter(id=id_sarana).first()
+    sarana = Sarana.objects.filter(ID_sarana=id_sarana).first()
 
     if sarana is not None:
         sarana.delete()

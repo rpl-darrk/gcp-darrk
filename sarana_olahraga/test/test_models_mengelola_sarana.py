@@ -56,5 +56,5 @@ class TestModels(TestCase):
         self.assertEqual(self.sarana1.jenis, "Lapangan Basket")
         self.assertEqual(self.sarana1.deskripsi,
                          "Lapangan RPL Indah merupakan lapangan pertama yang ada di GOR RPL Keren")
-        self.assertEqual(self.sarana1.get_sewa_sarana().get(sarana__sewasarana__ID_sewa__exact="1"),
+        self.assertEqual(self.sarana1.get_sewa_sarana().get(sarana__sewa_sarana__ID_sewa__exact="1"),
                          self.sewa_sarana_1)

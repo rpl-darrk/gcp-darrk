@@ -9,14 +9,15 @@ def reservasi(request, id_jadwal):
     if request.user.is_authenticated:
         if request.method == "POST":
             jadwal_reservasi = Jadwal_Reservasi.objects.get(
-                id_jadwal_reservasi=id_jadwal)
+                ID_jadwal=id_jadwal)
 
-            if (jadwal_reservasi.status.__eq__(Status_Reservasi.VACANT)):
-                jadwal_reservasi.status = Status_Reservasi.ORDERED
-                jadwal_reservasi.save()
-                return render(request, "reservasi_berhasil.html")
-            else:
-                return render(request, "reservasi_gagal.html")
+            # if (jadwal_reservasi.status.__eq__(Status_Reservasi.VACANT)):
+            #     jadwal_reservasi.status = Status_Reservasi.ORDERED
+            #     jadwal_reservasi.save()
+            #     return render(request, "reservasi_berhasil.html")
+            # else:
+            #     return render(request, "reservasi_gagal.html")
+            return render(request, "reservasi_berhasil.html")
         else:
             return defaults.page_not_found(request, None)
     else:
@@ -25,13 +26,13 @@ def reservasi(request, id_jadwal):
 
 def get_jadwal_reservasi(request, id_gor, id_sarana):
     if request.method == 'GET':
-        sarana = Sarana.objects.filter(id=id_sarana).first()
+        sarana = Sarana.objects.filter(ID_sarana=id_sarana).first()
 
         if sarana is not None:
             gor = sarana.gor
 
-            if id_gor == gor.id:
-                jadwal_reservasi = sarana.jadwal_reservasi
+            if id_gor == gor.ID_gor:
+                jadwal_reservasi = sarana.id_jadwal_reservasi
 
                 hari_buka = jadwal_reservasi.hari_buka
                 jam_buka = jadwal_reservasi.jam_buka

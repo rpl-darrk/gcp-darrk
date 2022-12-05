@@ -27,7 +27,7 @@ class TestViews(TestCase):
         )
         self.sarana1 = Sarana.objects.create(
             gor=self.gor1,
-            jadwal_reservasi=self.jadwal_reservasi_1,
+            id_jadwal_reservasi=self.jadwal_reservasi_1,
             ID_sarana='1',
             nama='Lapangan RPL Indah',
             url_foto='ristek.link/GOR-RPL-Keren',

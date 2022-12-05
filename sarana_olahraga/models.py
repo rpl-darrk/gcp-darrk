@@ -43,4 +43,4 @@ class Sarana(models.Model):
     deskripsi = models.TextField(max_length=None)
 
     def get_sewa_sarana(self):
-        return self.sewasarana_set.all()
+        return self.sewa_sarana_set.all()
