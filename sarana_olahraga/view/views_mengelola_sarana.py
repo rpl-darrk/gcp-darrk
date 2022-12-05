@@ -16,7 +16,6 @@ def indexDimas(request):
 def index(request):
     GORs = GOR.objects.all()
     saranas = Sarana.objects.all()
-    print(GORs)
     context = {
         'GORs': GORs,
         'Saranas': saranas

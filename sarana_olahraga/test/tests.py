@@ -64,7 +64,6 @@ class SaranaOlahragaTest(TestCase):
     def test_getSaranaOlaharaga(self):
         self.client.login(username="konsumen", password="konsumen")
         response = self.client.get("/sarana/1")
-        print(response)
 
         self.assertEqual(len(self.gor.getSaranaGor()), 2)
         self.assertEqual(response.status_code, 200)
