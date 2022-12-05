@@ -82,3 +82,14 @@ def getSaranaOlaharaga(request, ID_gor):
         gor, created = GOR.objects.get_or_create(ID_gor=ID_gor)
         context = {"gor": gor, "daftar_sarana": gor.getSaranaGor()}
         return render(request, "sarana_olahraga.html", context)
+
+
+@login_required(login_url='/login/')
+def get_info_gor(request, ID_gor):
+    if request.method == "GET":
+        gor = GOR.objects.get(ID_gor=ID_gor)
+        response = {'nama': gor.nama,
+                    'url_foto': gor.url_foto,
+                    'alamat': gor.alamat,
+                    'no_telepon': gor.nomor_telepon}
+        return render(request, 'info_gor.html', response)

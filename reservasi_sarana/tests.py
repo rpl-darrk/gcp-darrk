@@ -37,10 +37,26 @@ class ReservasiSaranaTest(TestCase):
         self.sewa_sarana = Sewa_Sarana.objects.create(
             ID_sewa="1", biaya=120000.00, sarana=self.sarana, konsumen=self.konsumen, pengurus=self.pengurus, jam_booking=["10.00-11.00", 0])
 
-    def test_contohDaftar(self):
-        self.client.login(username="pengurus", password="pengurus")
-        response = self.client.post("/reservasi/contoh-daftar")
-        self.assertEqual(response.status_code, 200)
+        self.user_konsumen2 = User.objects.create_user(
+            email="konsumen2@email.com",
+            username="konsumen2",
+            password="konsumen2",
+        )
+        self.konsumen2 = Konsumen_GOR.objects.create(
+            user=self.user_konsumen2,
+            nama="konsumen2",
+            nomor_telepon="081292929294",
+            status_loyalty="Basic Member"
+        )
+
+        self.sewa_sarana2 = Sewa_Sarana.objects.create(
+            ID_sewa="2",
+            biaya=120000.00,
+            sarana=self.sarana,
+            konsumen=self.konsumen2,
+            pengurus=self.pengurus,
+            jam_booking=["10.00-11.00", 0]
+        )
 
     def test_verifikasiPembayaran(self):
         self.detail = Detail_Pembayaran.objects.create(
@@ -110,4 +126,9 @@ class ReservasiSaranaTest(TestCase):
     def testCekRiwayatReservasi(self):
         self.client.login(username="konsumen", password="konsumen")
         response = self.client.get("/reservasi/riwayat-reservasi")
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_daftar_reservasi(self):
+        self.client.login(username="pengurus", password="pengurus")
+        response = self.client.get("/daftar-reservasi")
         self.assertEqual(response.status_code, 200)

@@ -25,7 +25,7 @@ class SaranaOlahragaTest(TestCase):
             user=self.user_pengurus, nama="pengurus", nomor_telepon="67890", akun_bank="0123124213")
 
         self.gor = GOR.objects.create(ID_gor="1",  nama="nama",
-                                 url_foto="url_foto", alamat="alamat", nomor_telepon="no_telepon", pengurus=self.pengurus)
+                                      url_foto="url_foto", alamat="alamat", nomor_telepon="no_telepon", pengurus=self.pengurus)
 
         self.jadwal_1 = initTabelJadwal()
 
@@ -66,4 +66,9 @@ class SaranaOlahragaTest(TestCase):
         response = self.client.get("/sarana/1")
 
         self.assertEqual(len(self.gor.getSaranaGor()), 2)
+        self.assertEqual(response.status_code, 200)
+
+    def test_get_info_gor(self):
+        self.client.login(username="konsumen", password="konsumen")
+        response = self.client.get("/info-gor/1")
         self.assertEqual(response.status_code, 200)
