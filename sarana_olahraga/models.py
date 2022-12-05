@@ -3,11 +3,11 @@ from pengguna.models import Pengurus_GOR
 
 
 class GOR(models.Model):
-    ID_gor = models.TextField(primary_key=True)
-    nama = models.TextField()
-    url_foto = models.TextField()
-    alamat = models.TextField()
-    no_telepon = models.TextField()
+    ID_gor = models.CharField(max_length=200, primary_key=True)
+    nama = models.CharField(max_length=200)
+    url_foto = models.CharField(max_length=200)
+    alamat = models.CharField(max_length=200)
+    nomor_telepon = models.CharField(max_length=200)
     pengurus = models.OneToOneField(
         Pengurus_GOR, on_delete=models.CASCADE, blank=True, null=True)
 
@@ -15,19 +15,32 @@ class GOR(models.Model):
         return self.sarana_set.all()
 
 
-class Sarana(models.Model):
-    ID_sarana = models.TextField(primary_key=True)
-    id_jadwal = models.ForeignKey(to=Jadwal_Reservasi, on_delete=models.CASCADE)
-    nama = models.TextField()
-    url_foto = models.TextField()
-    jenis = models.TextField()
-    deskripsi = models.TextField()
-    gor = models.ForeignKey(
-        GOR, on_delete=models.CASCADE, blank=True, null=True)
-
-
 class Jadwal_Reservasi(models.Model):
     ID_jadwal = models.AutoField(primary_key=True)
-    hari_buka = models.JSONField() # array 1 dimensi boolean representasi hari
-    jam_buka = models.JSONField() # array 2 dimensi string representasi waktu awal - waktu akhir
-    status_book = models.JSONField() # array 2 dimensi boolean representasi status book pada pasangan hari & jam
+    # array 1 dimensi boolean representasi hari
+    hari_buka = models.JSONField(null=True)
+    # array 2 dimensi string representasi waktu awal - waktu akhir
+    jam_buka = models.JSONField(null=True)
+    # array 2 dimensi boolean representasi status book pada pasangan hari & jam
+    status_book = models.JSONField(null=True)
+
+
+class Sarana(models.Model):
+    class SaranaType(models.TextChoices):
+        LAPANGAN_BASKET = "Lapangan Basket",
+        LAPANGAN_BULU_TANGKIS = "Lapangan Bulutangkis",
+        LAPANGAN_FUTSAL = "Lapangan Futsal",
+        KOLAM_RENANG = "Kolam Renang",
+        LAPANGAN_SEPAK_BOLA = "Lapangan Sepak Bola",
+
+    gor = models.ForeignKey(to=GOR, on_delete=models.CASCADE)
+    id_jadwal_reservasi = models.ForeignKey(
+        to=Jadwal_Reservasi, on_delete=models.CASCADE)
+    ID_sarana = models.CharField(max_length=200, primary_key=True)
+    nama = models.CharField(max_length=200)
+    url_foto = models.CharField(max_length=200)
+    jenis = models.CharField(max_length=200, choices=SaranaType.choices)
+    deskripsi = models.TextField(max_length=None)
+
+    def get_sewa_sarana(self):
+        return self.sewasarana_set.all()

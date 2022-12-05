@@ -46,12 +46,13 @@ class Status_Verifikasi_Pembatalan(models.Model):
 
 
 class Sewa_Sarana(models.Model):
-    ID_sewa = models.TextField(primary_key=True)
+    ID_sewa = models.CharField(max_length=200, primary_key=True)
     datetime = models.DateTimeField(auto_now_add=True)
     sarana = models.ForeignKey(
         Sarana, on_delete=models.CASCADE, blank=True, null=True)
     biaya = models.FloatField(default=0)
     status = models.TextField(default=Status_Sewa_Sarana.WAITTOPAY)
+    jam_booking = models.JSONField()
     konsumen = models.ForeignKey(
         Konsumen_GOR, on_delete=models.CASCADE, blank=True, null=True)
     pengurus = models.ForeignKey(

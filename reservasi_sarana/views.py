@@ -3,7 +3,7 @@ from django.http.response import HttpResponseRedirect
 from .models import *
 from pengguna.models import Pengguna, Konsumen_GOR
 from django.contrib.auth.decorators import login_required
-from pengguna.models import 
+from pengguna.models import *
 
 
 @login_required(login_url='/login/')
