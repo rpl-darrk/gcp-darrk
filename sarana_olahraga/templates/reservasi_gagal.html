@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <title>Bad Request</title>
+{% endblock meta %}
+
+{% block content %}
+    <h1>Gagal</h1>
+    <p><img src="{% static 'img/django-logo-negative.svg' %}"></p>
+{% endblock content %}

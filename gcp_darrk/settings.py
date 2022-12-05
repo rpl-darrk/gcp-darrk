@@ -60,7 +60,10 @@ INSTALLED_APPS = [
     "main",
     "melakukan_pembayaran_reservasi",
     "melihat_daftar_reservasi",
-    "melihat_informasi_gor"
+    "melihat_informasi_gor",
+    "pengguna",
+    "reservasi_sarana",
+    "sarana_olahraga",
 ]
 
 MIDDLEWARE = [
@@ -79,7 +82,7 @@ ROOT_URLCONF = "gcp_darrk.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates",],
+        "DIRS": [BASE_DIR / "templates", ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -107,7 +110,8 @@ DATABASES = {
 
 # Set database settings automatically using DATABASE_URL.
 if PRODUCTION:
-    DATABASES["default"] = dj_database_url.config(conn_max_age=600, ssl_require=True)
+    DATABASES["default"] = dj_database_url.config(
+        conn_max_age=600, ssl_require=True)
 
 
 # Password validation
@@ -117,9 +121,9 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
     },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator", },
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator", },
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator", },
 ]
 
 

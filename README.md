@@ -4,6 +4,9 @@
 [![pipeline status][pipeline-badge]][commits-gl]
 [![coverage report][coverage-badge]][commits-gl]
 
+## Script Coverage
+"coverage run --source=reservasi_sarana,sarana_olahraga manage.py test -v 2 && coverage report -m"
+
 Repositori ini berisi sebuah templat untuk membuat proyek Django yang siap
 di-*deploy* ke Heroku melalui GitHub Actions atau GitLab CI.
 
