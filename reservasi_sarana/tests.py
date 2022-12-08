@@ -29,7 +29,12 @@ class ReservasiSaranaTest(TestCase):
                                       url_foto="url_foto", alamat="alamat", nomor_telepon="nomor_telepon", pengurus=self.pengurus)
 
         self.jadwal_reservasi = Jadwal_Reservasi.objects.create(
-            hari_buka="[]", jam_buka="[[]]", status_book="[[]]")
+            ID_jadwal='1',
+            hari_buka=[True, True, True, True, True, False, False],
+            jam_buka=[['10.00', '11.00'], ['11.00', '12.00']],
+            status_book=[[True, True, True, True, True, True, True], [
+                True, True, True, True, True, True, True]]
+        )
 
         self.sarana = Sarana.objects.create(ID_sarana="1",  nama="nama",
                                             url_foto="url_foto", jenis="jenis", deskripsi="deskripsi", gor=self.gor, id_jadwal_reservasi=self.jadwal_reservasi)
