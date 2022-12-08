@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from django.http.response import HttpResponseRedirect
 from .models import *
-from pengguna.models import Pengguna, Konsumen_GOR
 from django.contrib.auth.decorators import login_required
 from pengguna.models import *
 from .forms import UploadBuktiPembayaranForm
 from datetime import datetime
 from django.views.decorators.csrf import csrf_exempt
+from sarana_olahraga.models import *
 
 
 @csrf_exempt
@@ -31,11 +31,30 @@ def pembatalanReservasi(request):
             user=request.user)
         sewa_sarana.batalSewa(pengguna)
 
+        sinkronisasiPembatalan(sewa_sarana)
+
         try:
             Pengurus_GOR.objects.get(user=request.user)
             return HttpResponseRedirect('../../daftar-reservasi')
         except Pengurus_GOR.DoesNotExist:
             return HttpResponseRedirect('../riwayat-reservasi')
+
+
+def sinkronisasiPembatalan(sewa_sarana):
+    jadwal_booking = sewa_sarana.jam_booking
+    sarana = sewa_sarana.sarana
+    jadwal_reservasi = sarana.id_jadwal_reservasi
+
+    waktu = jadwal_booking[0]
+    hari = jadwal_booking[1]
+
+    waktu_awal = waktu.split('-')[0]
+
+    for i in jadwal_reservasi.jam_buka:
+        if i[0] == waktu_awal:
+            jadwal_reservasi.status_book[hari] = True
+            jadwal_reservasi.save()
+            break
 
 
 @csrf_exempt
