@@ -42,10 +42,9 @@ def add_sarana(request):
             sarana.gor = GOR.objects.get(pengurus=pengurus_gor)
 
             new_jadwal_reservasi = Jadwal_Reservasi.objects.create(
-                hari_buka=[True, True, True, True, True, False, False],
-                jam_buka=[["10.00", "11.00"], ["11.00", "12.00"]],
-                status_book=[[True, True, True, True, True, True, True],
-                             [True, True, True, True, True, True, True]],
+                hari_buka=[False, False, False, False, False, False, False],
+                jam_buka=[],
+                status_book=[],
             )
             new_jadwal_reservasi.save()
 
