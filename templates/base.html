@@ -18,7 +18,7 @@
   {% endblock meta %}
 </head>
 
-<body>
+<body style="min-height:100vh; margin:0; position:relative;">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
       <a class="navbar-brand" href="/">
@@ -31,13 +31,14 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="/">Home</a>
+            <a class="nav-link" href="/">Home</a>
           </li>
+          {% if request.session.role == 'PENGURUS' %}
           <li class="nav-item">
             <a class="nav-link" href="/daftar-gor">Daftar GOR</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Daftar Reservasi</a>
+            <a class="nav-link" href="/daftar-reservasi">Daftar Reservasi</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
@@ -45,17 +46,33 @@
               Pengelolaan GOR
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Edit Informasi GOR</a></li>
-              <li><a class="dropdown-item" href="#">Daftar Sarana</a></li>
-              <li><a class="dropdown-item" href="#">Tambah Sarana</a></li>
+              <li><a class="dropdown-item" href="/mengelola-sarana-olahraga">Daftar Sarana</a></li>
+              <li><a class="dropdown-item" href="/mengelola-sarana-olahraga/add-sarana">Tambah Sarana</a></li>
             </ul>
           </li>
+          {% elif request.session.role == 'KONSUMEN' %}
+          <li class="nav-item">
+            <a class="nav-link" href="/daftar-gor">Daftar GOR</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/riwayat-reservasi">Riwayat Reservasi</a>
+          </li>
+          {% endif %}
         </ul>
         <form class="d-flex">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            {% if request.session.role == None %}
+            <li class="nav-item">
+              <a class="nav-link" href="/register">Sign Up</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+            {% else %}
             <li class="nav-item">
               <a class="nav-link" href="/logout">Logout</a>
             </li>
+            {% endif %}
           </ul>
         </form>
       </div>
@@ -65,9 +82,11 @@
   {% block content %}
   {% endblock content %}
 
-  <div class="mt-5">
+  <div class="mt-5 pt-5"></div>
 
-    <footer class="text-center text-lg-start" style="background-color: #e3fde6;">
+  <div class="mt-5 pt-5">
+    <footer class="text-center text-lg-start"
+      style="background-color: #e3fde6; position: absolute; bottom: 0; width: 100%; height: auto;">
       <div class="container d-flex justify-content-center pt-4">
         <h6>Rekayasa Perangkat Lunak PT RPL Lil</h6>
       </div>
