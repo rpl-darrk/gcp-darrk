@@ -141,6 +141,19 @@ class ReservasiSaranaTest(TestCase):
                          str(Status_Verifikasi_Pembatalan.VERIFIED))
         self.assertEqual(response.status_code, 302)
 
+    def test_selesaikanReservasi(self):
+        data = {
+            'ID_sewa': 1
+        }
+        self.client.login(username="pengurus", password="pengurus")
+        response = self.client.post("/reservasi/selesai", data)
+
+        self.sewa_sarana = Sewa_Sarana.objects.get(ID_sewa="1")
+
+        self.assertEqual(self.sewa_sarana.status,
+                         str(Status_Sewa_Sarana.DONE))
+        self.assertEqual(response.status_code, 302)
+
     def testCekRiwayatReservasi(self):
         self.client.login(username="konsumen", password="konsumen")
         response = self.client.get("/reservasi/riwayat-reservasi")
