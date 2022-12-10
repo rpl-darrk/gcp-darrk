@@ -88,8 +88,12 @@ def getSaranaOlaharaga(request, ID_gor):
 def get_info_gor(request, ID_gor):
     if request.method == "GET":
         gor = GOR.objects.get(ID_gor=ID_gor)
+        no_telp = gor.nomor_telepon
+        if no_telp[0] == '0':
+            no_telp = '62' + no_telp[1:]
         response = {'nama': gor.nama,
                     'url_foto': gor.url_foto,
                     'alamat': gor.alamat,
-                    'no_telepon': gor.nomor_telepon}
+                    'no_telepon': gor.nomor_telepon,
+                    'link_wa': "https://api.whatsapp.com/send?phone=" + no_telp}
         return render(request, 'info_gor.html', response)

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+{% endblock meta %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Info GOR</title>
+    <style>
+      .button {
+        background-color: #33dc39; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="text-align:center">
+      <br>
+      <h1>Informasi GOR</h1>
+      <br>
+      <img src="{{ url_foto }}" style="max-width:350px; max-height:350px; border-radius: 50%;">
+      <br>
+      <br>
+      <p>Nama: {{ nama }}</p>
+      <p>Alamat: {{ alamat }}</p>
+      <p>No. Telepon: {{ no_telepon }}</p>
+      <a href="{{ link_wa }}" class="button">Hubungi via WhatsApp <i class="fa fa-whatsapp" style="font-size:24px"></i></a>
+    </div>
+  </body>
+</html>
+{% endblock content %}
