@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block meta %}
-    <title>Hello, Maba!</title>
+    <title>Daftar Sarana Olahraga</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 {% endblock meta %}
 
@@ -10,7 +10,7 @@
 <div class="container card mt-4" style="border-color:#b4f9bc;">
     <div class="d-flex justify-content-center my-4">
         <br>
-        <h2 style="color:#0da126;">Daftar Sarana GOR {{ gor.nama }}</h2>
+        <h2 style="color:#0da126;">Daftar Sarana GOR - {{ gor.nama }}</h2>
         <br>
     </div>
     {% if sarana_list is not None %}
@@ -24,7 +24,7 @@
                 <div class="row g-0">
                     <div class="col-lg-3 col-12">
                         <img src="{{sarana.url_foto}}" class="img-fluid rounded-start"
-                             style="border-color:#0da126; height: 200px;" >
+                             style="border-color:#0da126; height: 100%;" >
                     </div>
                     <div class="col-lg-9 col-12">
                         <div class="card-body">
