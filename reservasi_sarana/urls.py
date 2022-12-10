@@ -13,7 +13,7 @@ urlpatterns = [
          views.pembatalanReservasi, name="pembatalan"),
     path("reservasi/selesai",
          views.selesaikanReservasi, name="selesai"),
-    path("reservasi/riwayat-reservasi",
+    path("riwayat-reservasi",
          views.cekRiwayatReservasi, name="cek_riwayat_reservasi"),
     path('daftar-reservasi', views.get_daftar_reservasi,
          name='get_daftar_reservasi'),

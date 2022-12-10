@@ -53,12 +53,19 @@ class SaranaOlahragaTest(TestCase):
 
     def testForbidKonsumenToUpdateTabelJadwal(self):
         self.client.login(username="konsumen", password="konsumen")
-        response = self.client.get("/1/update-jadwal")
+        response = self.client.post(
+            "/mengelola-sarana-olahraga/update-jadwal/1")
         self.assertEqual(response.status_code, 403)
 
     def testAllowPengurusToUpdateTabelJadwal(self):
         self.client.login(username="pengurus", password="pengurus")
-        response = self.client.get("/1/update-jadwal")
+        data = {
+            'hari_buka': ['[true,true,true,true,false,true,false]'],
+            'jam_buka': ['[["10.00","11.00"],["11.00","12.00"]]'],
+            'status_book': ['[[True, True, True, True, True, True, True], [True, True, True, True, True, True, True]]']
+        }
+        response = self.client.post(
+            "/mengelola-sarana-olahraga/update-jadwal/1", data)
         self.assertEqual(response.status_code, 200)
 
     def test_getSaranaOlaharaga(self):
