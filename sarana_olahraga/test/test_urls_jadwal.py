@@ -14,4 +14,4 @@ class TestUrls(SimpleTestCase):
         self.assertEqual(resolve_url.app_names, ['jadwal_reservasi'])
         self.assertEqual(resolve_url.namespaces, ['jadwal_reservasi'])
         self.assertEqual(
-            resolve_url.route, 'melihat_jadwal_reservasi/<str:id_gor>/<str:id_sarana>/')
+            resolve_url.route, 'jadwal/<str:id_gor>/<str:id_sarana>/')

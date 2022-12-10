@@ -54,12 +54,8 @@ class TestViews(TestCase):
         self.assertEqual(response.status_code, 200)
 
         self.assertTemplateUsed(
-            response, 'mengelola_sarana_olahraga/base.html')
-        self.assertTemplateUsed(response, 'mengelola_sarana_olahraga/css.html')
-        self.assertTemplateUsed(
-            response, 'mengelola_sarana_olahraga/scripts.html')
-        self.assertTemplateUsed(
             response, 'melihat_jadwal_reservasi/index.html')
+        self.assertTemplateUsed(response, 'base.html')
 
         self.assertTemplateNotUsed(
             response, 'mengelola_sarana_olahraga/index.html')
