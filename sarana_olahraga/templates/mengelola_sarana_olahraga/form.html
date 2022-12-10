@@ -1,4 +1,4 @@
-{% extends 'mengelola_sarana_olahraga/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block meta %}
@@ -8,9 +8,16 @@
 {% endblock meta %}
 
 {% block content %}
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Submit">
-    </form>
+    <div class="container card mt-4" style="border-color:#b4f9bc;">
+        <div class="d-flex justify-content-center my-4">
+            <br>
+            <h2 style="color:#0da126;">Form Data Sarana Olahraga</h2>
+            <br>
+        </div>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Submit">
+        </form>
+    </div>
 {% endblock content %}

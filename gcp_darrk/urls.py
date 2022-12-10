@@ -20,7 +20,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("main.urls")),
     path("", include("sarana_olahraga.url.urls_jadwal_reservasi")),
-    path("mengelola_sarana_olahraga/",
+    path("mengelola-sarana-olahraga/",
          include("sarana_olahraga.url.urls_mengelola_sarana")),
     path("", include("pengguna.urls")),
     path("", include("reservasi_sarana.urls")),

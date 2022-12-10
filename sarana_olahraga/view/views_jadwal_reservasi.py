@@ -46,12 +46,16 @@ def get_jadwal_reservasi(request, id_gor, id_sarana):
                 for i in range(len(status_book)):
                     status_book[i].insert(0, list_jam_buka[i])
                     for j in range(1, 8):
+                        status = {'waktu': "{}|{}|{}".format(j - 1, jam_buka[i][0], jam_buka[i][1])}
                         if not hari_buka[j - 1]:
-                            status_book[i][j] = "Tutup"
+                            status['status'] = "Tutup"
+                            status_book[i][j] = status
                         elif not status_book[i][j]:
-                            status_book[i][j] = "Tidak Tersedia"
+                            status['status'] = "Tidak Tersedia"
+                            status_book[i][j] = status
                         else:
-                            status_book[i][j] = "Tersedia"
+                            status['status'] = "Tersedia"
+                            status_book[i][j] = status
 
                 daftar_tunggu = sarana.get_sewa_sarana().filter(status__exact=0)
                 status_book = sinkronisasiDaftarTunggu(

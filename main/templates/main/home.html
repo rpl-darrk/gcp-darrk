@@ -22,18 +22,18 @@
 
 <div class="container text-center mb-3">
   <div class="row justify-content-around mt-2">
-
+    {% if request.session.role == 'PENGURUS' %}
     <div class="col-lg-4 col-sm-6 d-flex justify-content-center mb-3">
       <div class="card mx-auto" style="border-color:#0da126; max-width: 18rem;">
-        <div class="card-header text-center text-white" style="background-color:#0da126;">Daftar GOR</div>
+        <div class="card-header text-center text-white" style="background-color:#0da126;">Pengelolaan GOR</div>
         <div class="card-body text-center">
           <svg xmlns="http://www.w3.org/2000/svg" width="3rem" height="3rem" fill="currentColor" class="bi bi-view-list"
             viewBox="0 0 16 16">
             <path
               d="M3 4.5h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H3zM1 2a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 2zm0 12a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 14z" />
           </svg>
-          <p class="card-text my-3">Lihat daftar GOR yang tersedia pada GCP.</p>
-          <a th:href="@{/}" class="btn btn-sm btn-outline-success">Lihat Daftar</a>
+          <p class="card-text my-3">Mengelola daftar sarana olahraga pada GOR.</p>
+          <a href="/mengelola-sarana-olahraga" class="btn btn-sm btn-outline-success">Kelola GOR</a>
         </div>
       </div>
     </div>
@@ -49,11 +49,48 @@
             <path
               d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1z" />
           </svg>
-          <p class="card-text my-3">Lihat daftar riwayat reservasi yang dibuat.</p>
-          <a th:href="@{/}" class="btn btn-sm btn-outline-success">Lihat Daftar</a>
+          <p class="card-text my-3">Lihat daftar reservasi terhadap sarana GOR.</p>
+          <a href="/daftar-reservasi" class="btn btn-sm btn-outline-success">Lihat Daftar</a>
         </div>
       </div>
     </div>
+    {% else %}
+    <div class="col-lg-4 col-sm-6 d-flex justify-content-center mb-3">
+      <div class="card mx-auto" style="border-color:#0da126; max-width: 18rem;">
+        <div class="card-header text-center text-white" style="background-color:#0da126;">Daftar GOR</div>
+        <div class="card-body text-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="3rem" height="3rem" fill="currentColor" class="bi bi-view-list"
+            viewBox="0 0 16 16">
+            <path
+              d="M3 4.5h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H3zM1 2a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 2zm0 12a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 14z" />
+          </svg>
+          <p class="card-text my-3">Lihat daftar GOR yang tersedia pada GCP.</p>
+          {% if request.session.role == 'KONSUMEN' %}
+          <a href="/daftar-gor" class="btn btn-sm btn-outline-success">Lihat Daftar</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4 col-sm-6 d-flex justify-content-center mb-3">
+      <div class="card mx-auto" style="border-color:#0da126; max-width: 18rem;">
+        <div class="card-header text-center text-white" style="background-color:#0da126;">Daftar Riwayat Reservasi</div>
+        <div class="card-body text-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="3rem" height="3rem" fill="currentColor" class="bi bi-bookmarks"
+            viewBox="0 0 16 16">
+            <path
+              d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5V4zm2-1a1 1 0 0 0-1 1v10.566l3.723-2.482a.5.5 0 0 1 .554 0L11 14.566V4a1 1 0 0 0-1-1H4z" />
+            <path
+              d="M4.268 1H12a1 1 0 0 1 1 1v11.768l.223.148A.5.5 0 0 0 14 13.5V2a2 2 0 0 0-2-2H6a2 2 0 0 0-1.732 1z" />
+          </svg>
+          <p class="card-text my-3">Lihat daftar riwayat reservasi yang dibuat.</p>
+          {% if request.session.role == 'KONSUMEN' %}
+          <a href="/riwayat-reservasi" class="btn btn-sm btn-outline-success">Lihat Daftar</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
 
   </div>
 </div>
@@ -77,27 +114,6 @@
       </p>
     </div>
   </div>
-</div>
-
-<br>
-<hr>
-
-<div class='container'>
-  <h1>Daftar GOR</h1>
-  {% for gor in gor_list %}
-  <div class="container" style="width: 95%; margin-bottom: 5px;">
-    <div class="row">
-      <div class="col-4">
-        <a>
-          <img src="{{ gor.url_foto }}" style="max-width:100%; max-height:100%;">
-        </a>
-      </div>
-      <div class="col">
-        <p>{{ gor.nama }}</p>
-      </div>
-    </div>
-  </div>
-  {% endfor %}
 </div>
 
 
