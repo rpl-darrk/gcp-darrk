@@ -4,12 +4,13 @@ from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import Konsumen_GOR, Pengurus_GOR
 
 
+@csrf_exempt
 def userLogin(request):
-
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -18,14 +19,13 @@ def userLogin(request):
         if user is not None:
 
             try:
-                account = Konsumen_GOR.objects.get(user=user)
-                msg = "{nama} berhasil login".format(nama=account.nama)
+                Konsumen_GOR.objects.get(user=user)
+                request.session['role'] = 'KONSUMEN'
             except:
-                account = Pengurus_GOR.objects.get(user=user)
-                msg = "{nama} berhasil login".format(nama=account.nama)
+                request.session['role'] = 'PENGURUS'
 
             login(request, user)
-            messages.success(request, msg)
+            return redirect('/')
 
         else:
             messages.warning(request, "Username atau Password salah")
@@ -36,4 +36,5 @@ def userLogin(request):
 
 def userLogout(request):
     logout(request)
-    return redirect('login')
+    request.session.pop("role", None)
+    return redirect('/')

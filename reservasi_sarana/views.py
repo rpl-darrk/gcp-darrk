@@ -2,6 +2,12 @@ from django.shortcuts import render
 from django.views import defaults
 from django.http.response import HttpResponseRedirect
 from .models import *
+from django.contrib.auth.decorators import login_required
+from pengguna.models import *
+from .forms import UploadBuktiPembayaranForm
+from datetime import datetime
+from django.views.decorators.csrf import csrf_exempt
+from sarana_olahraga.models import *
 from pengguna.models import Pengguna, Konsumen_GOR
 from sarana_olahraga.models import *
 from django.contrib.auth.decorators import login_required
@@ -72,23 +78,29 @@ def detail_pembayaran(request, ID_sewa):
     }
     return render(request, "info_pembayaran.html", context)
 
+@csrf_exempt
 @login_required(login_url='/login/')
-def verifikasiPembayaran(request, ID_sewa):
+def verifikasiPembayaran(request):
     if request.method == "POST":
+        ID_sewa = request.POST.get('ID_sewa', None)
         sewa_sarana, created = Sewa_Sarana.objects.get_or_create(
             ID_sewa=ID_sewa)
         sewa_sarana.ubahStatusPembayaran(Status_Detail_Pembayaran.VERIFIED)
         return HttpResponseRedirect('../../daftar-reservasi')
 
 
+@csrf_exempt
 @login_required(login_url='/login/')
-def pembatalanReservasi(request, ID_sewa):
+def pembatalanReservasi(request):
     if request.method == "POST":
+        ID_sewa = request.POST.get('ID_sewa', None)
         sewa_sarana, created = Sewa_Sarana.objects.get_or_create(
             ID_sewa=ID_sewa)
         pengguna = Pengguna.objects.get(
             user=request.user)
         sewa_sarana.batalSewa(pengguna)
+
+        sinkronisasiPembatalan(sewa_sarana)
 
         try:
             Pengurus_GOR.objects.get(user=request.user)
@@ -97,9 +109,28 @@ def pembatalanReservasi(request, ID_sewa):
             return HttpResponseRedirect('../riwayat-reservasi')
 
 
+def sinkronisasiPembatalan(sewa_sarana):
+    jadwal_booking = sewa_sarana.jam_booking
+    sarana = sewa_sarana.sarana
+    jadwal_reservasi = sarana.id_jadwal_reservasi
+
+    waktu = jadwal_booking[0]
+    hari = jadwal_booking[1]
+
+    waktu_awal = waktu.split('-')[0]
+
+    for i in jadwal_reservasi.jam_buka:
+        if i[0] == waktu_awal:
+            jadwal_reservasi.status_book[hari] = True
+            jadwal_reservasi.save()
+            break
+
+
+@csrf_exempt
 @login_required(login_url='/login/')
-def verifikasiPembatalan(request, ID_sewa):
+def verifikasiPembatalan(request):
     if request.method == "POST":
+        ID_sewa = request.POST.get('ID_sewa', None)
         sewa_sarana, created = Sewa_Sarana.objects.get_or_create(
             ID_sewa=ID_sewa)
         pembatalan, created = Pembatalan_Sewa_Sarana.objects.get_or_create(
@@ -109,6 +140,16 @@ def verifikasiPembatalan(request, ID_sewa):
 
         sewa_sarana.updateStatus(Status_Sewa_Sarana.CANCELLED)
         verifikasi_pembatalan.verifikasiPembatalan()
+        return HttpResponseRedirect('../../daftar-reservasi')
+
+
+@csrf_exempt
+def selesaikanReservasi(request):
+    if request.method == "POST":
+        ID_sewa = request.POST.get('ID_sewa', None)
+        sewa_sarana, created = Sewa_Sarana.objects.get_or_create(
+            ID_sewa=ID_sewa)
+        sewa_sarana.updateStatus(Status_Sewa_Sarana.DONE)
         return HttpResponseRedirect('../../daftar-reservasi')
 
 
