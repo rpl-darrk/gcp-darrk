@@ -9,6 +9,7 @@ class TestForms(TestCase):
             'nama': 'Lapangan RPL Indah 2',
             'url_foto': 'ristek.link/GOR-RPL-Keren',
             'jenis': 'Lapangan Basket',
+            'biaya': '0.0',
             'deskripsi': 'Lapangan RPL Indah merupakan lapangan kedua yang ada di GOR RPL Keren'
         })
 
@@ -18,4 +19,4 @@ class TestForms(TestCase):
         form = SaranaForm(data={})
 
         self.assertFalse(form.is_valid())
-        self.assertEqual(len(form.errors), 4)
+        self.assertEqual(len(form.errors), 5)
