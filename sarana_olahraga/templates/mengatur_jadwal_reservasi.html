@@ -1,0 +1,206 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Hello, Maba!</title>
+{% include 'mengelola_sarana_olahraga/css.html' %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock meta %}
+
+{% block content %}
+<script src=
+"https://code.jquery.com/jquery-3.6.0.js">
+</script>
+<script>
+
+function add(){
+    var new_input="<div id='add'><tr><td><input type='number' required>-<input type='number' required></td></tr><div>";
+    $('#new_chq').append(new_input);
+}
+
+function remove(){
+    $('#add').remove();
+}
+
+function post() {
+    var csrftoken = '{{ csrf_token }}';
+    var id_sarana = '{{ id_sarana }}'
+
+    var status_book_raw = document.getElementById("status_book_raw").innerHTML;
+
+    var counter_jam = 0;
+    $("#formId input[type=number]")
+        .each(function () {
+        counter_jam++;
+    });
+
+    var jam_buka = new Array(counter_jam/2);
+
+    for (var i = 0; i < jam_buka.length; i++) {
+        jam_buka[i] = new Array(2);
+    }
+    
+    var counter_start = 0;
+    var counter_end = 0;
+    $("#formId input[type=number]")
+        .each(function () {
+
+        if (this.value == ""){
+            alert("Field Waktu Tidak Boleh Kosong");
+            throw "exit";
+        }
+
+        jam_buka[counter_start][counter_end] = this.value;
+
+        if (counter_end == 0){
+            counter_end++;
+        }else{
+            counter_start++;
+            counter_end = 0;
+        }
+    });
+
+    let hari_buka = [false, false, false, false, false, false, false];
+
+    var count_checkbox = 0;
+    $("#formId input[type=checkbox]")
+        .each(function () {
+        hari_buka[count_checkbox] = this.checked;
+        count_checkbox++;
+    });
+
+    var post_url = window.location.origin + "/mengelola-sarana-olahraga/update-jadwal/" + id_sarana;
+
+    var post_data = {
+        'csrfmiddlewaretoken': csrftoken,
+        'hari_buka': JSON.stringify(hari_buka),
+        'jam_buka': JSON.stringify(jam_buka),
+        'status_book': status_book_raw.substring(1)
+    }
+
+    $.ajax({
+        type: "POST",
+        url: post_url,
+        data: post_data,
+        success: function(html){
+            location.reload();
+        }
+    });
+
+}
+</script>
+
+<div class="container">
+    <p id="status_book_raw" hidden> {{ status_book_raw }}</p>
+    <h1 class="text-center">Jadwal Reservasi untuk {{ sarana.nama }}</h1>
+    <form action="" id="formId" method="post">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Waktu [Mulai]-[Berakhir]</th>
+                    
+                    <th scope="col">
+                        Senin
+                        {% if hari_buka.0 and no_book.0 %}
+                        <input type="checkbox" name="senin" checked>
+                        {% elif hari_buka.0 %}
+                        <input type="checkbox" name="senin" checked disabled>
+                        {% else %}
+                        <input type="checkbox" name="senin">
+                        {% endif %}
+                    </th>
+                    <th scope="col">
+                        Selasa
+                        {% if hari_buka.1 and no_book.1 %}
+                        <input type="checkbox" name="selasa" checked>
+                        {% elif hari_buka.1 %}
+                        <input type="checkbox" name="selasa" checked disabled>
+                        {% else %}
+                        <input type="checkbox" name="selasa">
+                        {% endif %}
+                    </th>
+                    <th scope="col">
+                        Rabu
+                        {% if hari_buka.2 and no_book.2 %}
+                        <input type="checkbox" name="rabu" checked>
+                        {% elif hari_buka.2 %}
+                        <input type="checkbox" name="rabu" checked disabled>
+                        {% else %}
+                        <input type="checkbox" name="rabu">
+                        {% endif %}
+                    </th>
+                    <th scope="col">
+                        Kamis
+                        {% if hari_buka.3 and no_book.3 %}
+                        <input type="checkbox" name="kamis" checked>
+                        {% elif hari_buka.3 %}
+                        <input type="checkbox" name="kamis" checked disabled>
+                        {% else %}
+                        <input type="checkbox" name="kamis">
+                        {% endif %}
+                    </th>
+                    <th scope="col">
+                        Jumat
+                        {% if hari_buka.4 and no_book.4 %}
+                        <input type="checkbox" name="jumat" checked>
+                        {% elif hari_buka.4 %}
+                        <input type="checkbox" name="jumat" checked disabled>
+                        {% else %}
+                        <input type="checkbox" name="jumat">
+                        {% endif %}
+                    </th>
+                    <th scope="col">
+                        Sabtu
+                        {% if hari_buka.5 and no_book.5 %}
+                        <input type="checkbox" name="sabtu" checked>
+                        {% elif hari_buka.5 %}
+                        <input type="checkbox" name="sabtu" checked disabled>
+                        {% else %}
+                        <input type="checkbox" name="sabtu">
+                        {% endif %}
+                    </th>
+                    <th scope="col">
+                        Minggu
+                        {% if hari_buka.6 and no_book.6 %}
+                        <input type="checkbox" name="minggu" checked>
+                        {% elif hari_buka.6 %}
+                        <input type="checkbox" name="minggu" checked disabled>
+                        {% else %}
+                        <input type="checkbox" name="minggu">
+                        {% endif %}
+                    </th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for waktu in status_book %}
+                <tr>
+                    {% for element in waktu %}
+
+                        {% if element != "Tersedia" and element != "Tidak Tersedia" and element != "Tutup" %}
+                        <td>
+                            <input type="number" id="timestart" name="timestart" value="{{ element.0 }}" required>
+                            -
+                            <input type="number" id="timeend" name="timeend" value="{{ element.1 }}" required>
+                        </td>
+                        {% else %}
+                        <td class="font-weight-bold">{{ element }}</td>
+                        {% endif %}
+                        
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <table class="table">
+            <tbody id="new_chq">
+            </tbody>
+        </table>
+
+        <button class="my-2 btn btn-success" type="button" id="buttonId" onclick="post()">Simpan Update</button>
+    </form>
+
+    <button class="me-2 btn btn-info" id="adder" onclick="add()">Tambah Jadwal Baru</button>
+    <button class="me-2 btn btn-danger" id="adder" onclick="remove()">Cancel Penambahan Jadwal Baru</button>
+</div>
+{% endblock content %}

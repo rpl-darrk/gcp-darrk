@@ -1,39 +1,49 @@
-{% extends 'mengelola_sarana_olahraga/base.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block meta %}
 <title>Hello, Maba!</title>
-{% include 'mengelola_sarana_olahraga/css.html' %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 {% endblock meta %}
 
 {% block content %}
-<h1>Jadwal Reservasi untuk {{ sarana.nama }}</h1>
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">Waktu</th>
-            <th scope="col">Senin</th>
-            <th scope="col">Selasa</th>
-            <th scope="col">Rabu</th>
-            <th scope="col">Kamis</th>
-            <th scope="col">Jumat</th>
-            <th scope="col">Sabtu</th>
-            <th scope="col">Minggu</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for waktu in status_book %}
-        <tr>
-            {% for element in waktu %}
-            {% if element == "Tersedia" %}
-            <td><button type="button" class="btn btn-primary">Booking</button></td>
-            {% else %}
-            <td class="font-weight-bold">{{ element }}</td>
-            {% endif %}
+<div class="container card mt-4" style="border-color:#b4f9bc;">
+    <div class="d-flex justify-content-center my-4">
+        <br>
+        <h2 style="color:#0da126;">Jadwal Reservasi untuk {{ sarana.nama }}</h2>
+        <br>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Waktu</th>
+                <th scope="col">Senin</th>
+                <th scope="col">Selasa</th>
+                <th scope="col">Rabu</th>
+                <th scope="col">Kamis</th>
+                <th scope="col">Jumat</th>
+                <th scope="col">Sabtu</th>
+                <th scope="col">Minggu</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for waktu in status_book %}
+            <tr>
+                {% for element in waktu %}
+                {% if element.status == "Tersedia" %}
+                <td>
+                    <a href="../../../reservasi/{{ element.waktu }}" class="btn btn-primary">
+                        Booking</a>
+                </td>
+                {% elif element.status is not None  %}
+                    <td class="font-weight-bold">{{ element.status }}</td>
+                {% else %}
+                    <td class="font-weight-bold">{{ element }}</td>
+                {% endif %}
+                {% endfor %}
+            </tr>
             {% endfor %}
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
 {% endblock content %}
