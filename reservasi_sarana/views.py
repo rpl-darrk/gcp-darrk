@@ -99,7 +99,7 @@ def reservasi(request, ID_gor, ID_sarana, waktu):
 def detail_pembayaran(request, ID_sewa):
     sewa_sarana = Sewa_Sarana.objects.get(ID_sewa=ID_sewa)
     detail_pembayaran = Detail_Pembayaran.objects.get(sewa_sarana=sewa_sarana)
-    batas_waktu = sewa_sarana.datetime + timedelta(hours=1)
+    batas_waktu = sewa_sarana.datetime + timedelta(hours=8)
     pengurus_gor = sewa_sarana.pengurus
     sarana = sewa_sarana.sarana
 

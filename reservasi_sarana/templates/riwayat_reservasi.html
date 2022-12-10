@@ -69,7 +69,7 @@
                     <input id="ID_sewa" name="ID_sewa" type="text" value={{reservasi.ss.ID_sewa}} hidden>
                     <button class="btn btn-danger my-2">Ajukan Pembatalan Reservasi</button>
                 </form>
-                <a href="/info-pembayaran/{{ reservasi.ss.sarana.ID_sarana }}" class="btn btn-success">Bayar</a>
+                <a href="/info-pembayaran/{{ reservasi.ss.ID_sewa }}" class="btn btn-success">Bayar</a>
             </div>
             {% endfor %}
         {% else %}
