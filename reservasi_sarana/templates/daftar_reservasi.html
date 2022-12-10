@@ -2,14 +2,7 @@
 {% load static %}
 
 {% block meta %}
-{% endblock meta %}
-
-{% block content %}
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8" />
+<meta charset="UTF-8" />
     <title>Daftar Reservasi</title>
     <style>
         .notes-container {
@@ -53,164 +46,161 @@
             background-color: #deaaaa;
         }
     </style>
-</head>
+{% endblock meta %}
 
-<body>
-    <div style="text-align:center">
-        <br>
-        <h1><b>Daftar Reservasi - {{ gor.nama }}</b></h1>
-        <br>
-        <h3><b>Menunggu Pembayaran</b></h3>
-        <div class="notes-container">
-            {% if dr_menunggu_pembayaran %}
-            {% for reservasi in dr_menunggu_pembayaran %}
-            <div class="card">
-                <h4><b>{{ reservasi.ss.konsumen.nama }}</b></h4>
-                <h4 style=font-weight:normal;>Waktu Pemesanan: {{ reservasi.pesan }}</h4>
-                <h4 style=font-weight:normal;>Sarana: {{ reservasi.ss.sarana.nama }}</h4>
-                <h4 style=font-weight:normal;>Jam Booking: {{ reservasi.hari }}, {{ reservasi.ss.jam_booking.0 }}</h4>
-                <h4 style=font-weight:normal;>Biaya: Rp{{ reservasi.ss.biaya }}</h4>
-                <form method="POST" action="/reservasi/pembatalan">
-                    {% csrf_token %}
-                    <input id="ID_sewa" name="ID_sewa" type="text" value={{reservasi.ss.ID_sewa}} hidden>
-                    <button class="btn btn-danger my-2">Batalkan Reservasi</button>
-                </form>
-            </div>
-            {% endfor %}
-            {% else %}
-            <h3>Belum ada reservasi</h3>
-            {% endif %}
+{% block content %}
+<div style="text-align:center">
+    <br>
+    <h1><b>Daftar Reservasi - {{ gor.nama }}</b></h1>
+    <br>
+    <h4><b>Menunggu Pembayaran</b></h4>
+    <div class="notes-container">
+        {% if dr_menunggu_pembayaran %}
+        {% for reservasi in dr_menunggu_pembayaran %}
+        <div class="card">
+            <h5><b>{{ reservasi.ss.konsumen.nama }}</b></h5>
+            <p style=font-weight:normal;>Waktu Pemesanan: {{ reservasi.pesan }}</p>
+            <p style=font-weight:normal;>Sarana: {{ reservasi.ss.sarana.nama }}</p>
+            <p style=font-weight:normal;>Jam Booking: {{ reservasi.hari }}, {{ reservasi.ss.jam_booking.0 }}</p>
+            <p style=font-weight:normal;>Biaya: Rp{{ reservasi.ss.biaya }}</p>
+            <form method="POST" action="/reservasi/pembatalan">
+                {% csrf_token %}
+                <input id="ID_sewa" name="ID_sewa" type="text" value={{reservasi.ss.ID_sewa}} hidden>
+                <button class="btn btn-danger my-2">Batalkan Reservasi</button>
+            </form>
         </div>
-        <h3><b>Menunggu Verifikasi Pembayaran</b></h3>
-        <div class="notes-container">
-            {% if dr_menunggu_verif_bayar %}
-            {% for reservasi in dr_menunggu_verif_bayar %}
-            <div class="card">
-                <h4><b>{{ reservasi.ss.konsumen.nama }}</b></h4>
-                <h4 style=font-weight:normal;>Waktu Pemesanan: {{ reservasi.pesan }}</h4>
-                <h4 style=font-weight:normal;>Sarana: {{ reservasi.ss.sarana.nama }}</h4>
-                <h4 style=font-weight:normal;>Jam Booking: {{ reservasi.hari }}, {{ reservasi.ss.jam_booking.0 }}</h4>
-                <h4 style=font-weight:normal;>Biaya: Rp{{ reservasi.ss.biaya }}</h4>
-                <form method="POST" action="/reservasi/pembatalan">
-                    {% csrf_token %}
-                    <input id="ID_sewa" name="ID_sewa" type="text" value={{reservasi.ss.ID_sewa}} hidden>
-                    <button class="btn btn-danger my-2">Batalkan Reservasi</button>
-                </form>
-                <form method="POST" action="/reservasi/verifikasi-pembayaran">
-                    {% csrf_token %}
-                    <input id="ID_sewa" name="ID_sewa" type="text" value={{reservasi.ss.ID_sewa}} hidden>
-                    <button class="btn btn-success">Verifikasi Pembayaran</button>
-                    <br>
-                    {% if reservasi.dp.bukti_pembayara != '' %}
-                    <a class="btn btn-info my-2" href="{{ reservasi.dp.bukti_pembayaran }}" target="_blank">Lihat Bukti
-                        Bayar</a>
-                    {% endif %}
-                </form>
-            </div>
-            {% endfor %}
-            {% else %}
-            <h3>Belum ada reservasi</h3>
-            {% endif %}
-        </div>
-        <h3><b>Reservasi Berlangsung</b></h3>
-        <div class="notes-container">
-            {% if dr_berlangsung %}
-            {% for reservasi in dr_berlangsung %}
-            <div class="card">
-                <h4><b>{{ reservasi.ss.konsumen.nama }}</b></h4>
-                <h4 style=font-weight:normal;>Waktu Pemesanan: {{ reservasi.pesan }}</h4>
-                <h4 style=font-weight:normal;>Sarana: {{ reservasi.ss.sarana.nama }}</h4>
-                <h4 style=font-weight:normal;>Jam Booking: {{ reservasi.hari }}, {{ reservasi.ss.jam_booking.0 }}</h4>
-                <h4 style=font-weight:normal;>Biaya: Rp{{ reservasi.ss.biaya }}</h4>
-                <form method="POST" action="/reservasi/pembatalan">
-                    {% csrf_token %}
-                    <input id="ID_sewa" name="ID_sewa" type="text" value={{reservasi.ss.ID_sewa}} hidden>
-                    <button class="btn btn-danger my-2">Batalkan Reservasi</button>
-                </form>
-                <form method="POST" action="/reservasi/selesai">
-                    {% csrf_token %}
-                    <input id="ID_sewa" name="ID_sewa" type="text" value={{reservasi.ss.ID_sewa}} hidden>
-                    <button class="btn btn-success">Selesaikan Reservasi</button>
-                    <br>
-                    {% if reservasi.dp.bukti_pembayara != '' %}
-                    <a class="btn btn-info my-2" href="{{ reservasi.dp.bukti_pembayaran }}" target="_blank">Lihat Bukti
-                        Bayar</a>
-                    {% endif %}
-                </form>
-            </div>
-            {% endfor %}
-            {% else %}
-            <h3>Belum ada reservasi</h3>
-            {% endif %}
-        </div>
-        <h3><b>Reservasi Selesai</b></h3>
-        <div class="notes-container">
-            {% if dr_selesai %}
-            {% for reservasi in dr_selesai %}
-            <div class="card">
-                <h4><b>{{ reservasi.ss.konsumen.nama }}</b></h4>
-                <h4 style=font-weight:normal;>Waktu Pemesanan: {{ reservasi.pesan }}</h4>
-                <h4 style=font-weight:normal;>Sarana: {{ reservasi.ss.sarana.nama }}</h4>
-                <h4 style=font-weight:normal;>Jam Booking: {{ reservasi.hari }}, {{ reservasi.ss.jam_booking.0 }}</h4>
-                <h4 style=font-weight:normal;>Biaya: Rp{{ reservasi.ss.biaya }}</h4>
+        {% endfor %}
+        {% else %}
+        <p>Belum ada reservasi</p>
+        {% endif %}
+    </div>
+    <h4><b>Menunggu Verifikasi Pembayaran</b></h4>
+    <div class="notes-container">
+        {% if dr_menunggu_verif_bayar %}
+        {% for reservasi in dr_menunggu_verif_bayar %}
+        <div class="card">
+            <h5><b>{{ reservasi.ss.konsumen.nama }}</b></h5>
+            <p style=font-weight:normal;>Waktu Pemesanan: {{ reservasi.pesan }}</p>
+            <p style=font-weight:normal;>Sarana: {{ reservasi.ss.sarana.nama }}</p>
+            <p style=font-weight:normal;>Jam Booking: {{ reservasi.hari }}, {{ reservasi.ss.jam_booking.0 }}</p>
+            <p style=font-weight:normal;>Biaya: Rp{{ reservasi.ss.biaya }}</h4>
+            <form method="POST" action="/reservasi/pembatalan">
+                {% csrf_token %}
+                <input id="ID_sewa" name="ID_sewa" type="text" value={{reservasi.ss.ID_sewa}} hidden>
+                <button class="btn btn-danger my-2">Batalkan Reservasi</button>
+            </form>
+            <form method="POST" action="/reservasi/verifikasi-pembayaran">
+                {% csrf_token %}
+                <input id="ID_sewa" name="ID_sewa" type="text" value={{reservasi.ss.ID_sewa}} hidden>
+                <button class="btn btn-success">Verifikasi Pembayaran</button>
+                <br>
                 {% if reservasi.dp.bukti_pembayara != '' %}
                 <a class="btn btn-info my-2" href="{{ reservasi.dp.bukti_pembayaran }}" target="_blank">Lihat Bukti
                     Bayar</a>
                 {% endif %}
-            </div>
-            {% endfor %}
-            {% else %}
-            <h3>Belum ada reservasi</h3>
-            {% endif %}
+            </form>
         </div>
-        <h3><b>Menunggu Verifikasi Pembatalan</b></h3>
-        <div class="notes-container">
-            {% if dr_menunggu_verif_batal %}
-            {% for reservasi in dr_menunggu_verif_batal %}
-            <div class="red-card">
-                <h4><b>{{ reservasi.ss.konsumen.nama }}</b></h4>
-                <h4 style=font-weight:normal;>Waktu Pemesanan: {{ reservasi.pesan }}</h4>
-                <h4 style=font-weight:normal;>Sarana: {{ reservasi.ss.sarana.nama }}</h4>
-                <h4 style=font-weight:normal;>Jam Booking: {{ reservasi.hari }}, {{ reservasi.ss.jam_booking.0 }}</h4>
-                <h4 style=font-weight:normal;>Biaya: Rp{{ reservasi.ss.biaya }}</h4>
-                <form method="POST" action="/reservasi/verifikasi-pembatalan">
-                    {% csrf_token %}
-                    <input id="ID_sewa" name="ID_sewa" type="text" value={{reservasi.ss.ID_sewa}} hidden>
-                    <button class="btn btn-success">Verifikasi Pembatalan</button>
-                    <br>
-                    {% if reservasi.dp.bukti_pembayara != '' %}
-                    <a class="btn btn-info my-2" href="{{ reservasi.dp.bukti_pembayaran }}" target="_blank">Lihat Bukti
-                        Bayar</a>
-                    {% endif %}
-                </form>
-            </div>
-            {% endfor %}
-            {% else %}
-            <h3>Belum ada reservasi</h3>
-            {% endif %}
-        </div>
-        <h3><b>Reservasi Dibatalkan</b></h3>
-        <div class="notes-container">
-            {% if dr_batal %}
-            {% for reservasi in dr_batal %}
-            <div class="red-card">
-                <h4><b>{{ reservasi.ss.konsumen.nama }}</b></h4>
-                <h4 style=font-weight:normal;>Waktu Pemesanan: {{ reservasi.pesan }}</h4>
-                <h4 style=font-weight:normal;>Sarana: {{ reservasi.ss.sarana.nama }}</h4>
-                <h4 style=font-weight:normal;>Jam Booking: {{ reservasi.hari }}, {{ reservasi.ss.jam_booking.0 }}</h4>
-                <h4 style=font-weight:normal;>Biaya: Rp{{ reservasi.ss.biaya }}</h4>
-                {% if reservasi.dp.bukti_pembayaran != '' %}
+        {% endfor %}
+        {% else %}
+        <p>Belum ada reservasi</p>
+        {% endif %}
+    </div>
+    <h4><b>Reservasi Berlangsung</b></h4>
+    <div class="notes-container">
+        {% if dr_berlangsung %}
+        {% for reservasi in dr_berlangsung %}
+        <div class="card">
+            <h5><b>{{ reservasi.ss.konsumen.nama }}</b></h5>
+            <p style=font-weight:normal;>Waktu Pemesanan: {{ reservasi.pesan }}</p>
+            <p style=font-weight:normal;>Sarana: {{ reservasi.ss.sarana.nama }}</p>
+            <p style=font-weight:normal;>Jam Booking: {{ reservasi.hari }}, {{ reservasi.ss.jam_booking.0 }}</p>
+            <p style=font-weight:normal;>Biaya: Rp{{ reservasi.ss.biaya }}</p>
+            <form method="POST" action="/reservasi/pembatalan">
+                {% csrf_token %}
+                <input id="ID_sewa" name="ID_sewa" type="text" value={{reservasi.ss.ID_sewa}} hidden>
+                <button class="btn btn-danger my-2">Batalkan Reservasi</button>
+            </form>
+            <form method="POST" action="/reservasi/selesai">
+                {% csrf_token %}
+                <input id="ID_sewa" name="ID_sewa" type="text" value={{reservasi.ss.ID_sewa}} hidden>
+                <button class="btn btn-success">Selesaikan Reservasi</button>
+                <br>
+                {% if reservasi.dp.bukti_pembayara != '' %}
                 <a class="btn btn-info my-2" href="{{ reservasi.dp.bukti_pembayaran }}" target="_blank">Lihat Bukti
                     Bayar</a>
                 {% endif %}
-            </div>
-            {% endfor %}
-            {% else %}
-            <h3>Belum ada reservasi</h3>
+            </form>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>Belum ada reservasi</p>
+        {% endif %}
+    </div>
+    <h4><b>Reservasi Selesai</b></h4>
+    <div class="notes-container">
+        {% if dr_selesai %}
+        {% for reservasi in dr_selesai %}
+        <div class="card">
+            <h5><b>{{ reservasi.ss.konsumen.nama }}</b></h5>
+            <p style=font-weight:normal;>Waktu Pemesanan: {{ reservasi.pesan }}</p>
+            <p style=font-weight:normal;>Sarana: {{ reservasi.ss.sarana.nama }}</p>
+            <p style=font-weight:normal;>Jam Booking: {{ reservasi.hari }}, {{ reservasi.ss.jam_booking.0 }}</p>
+            <p style=font-weight:normal;>Biaya: Rp{{ reservasi.ss.biaya }}</p>
+            {% if reservasi.dp.bukti_pembayara != '' %}
+            <a class="btn btn-info my-2" href="{{ reservasi.dp.bukti_pembayaran }}" target="_blank">Lihat Bukti
+                Bayar</a>
             {% endif %}
         </div>
+        {% endfor %}
+        {% else %}
+        <p>Belum ada reservasi</p>
+        {% endif %}
     </div>
-</body>
-
-</html>
+    <h4><b>Menunggu Verifikasi Pembatalan</b></h4>
+    <div class="notes-container">
+        {% if dr_menunggu_verif_batal %}
+        {% for reservasi in dr_menunggu_verif_batal %}
+        <div class="red-card">
+            <h5><b>{{ reservasi.ss.konsumen.nama }}</b></h5>
+            <p style=font-weight:normal;>Waktu Pemesanan: {{ reservasi.pesan }}</p>
+            <p style=font-weight:normal;>Sarana: {{ reservasi.ss.sarana.nama }}</p>
+            <p style=font-weight:normal;>Jam Booking: {{ reservasi.hari }}, {{ reservasi.ss.jam_booking.0 }}</p>
+            <p style=font-weight:normal;>Biaya: Rp{{ reservasi.ss.biaya }}</p>
+            <form method="POST" action="/reservasi/verifikasi-pembatalan">
+                {% csrf_token %}
+                <input id="ID_sewa" name="ID_sewa" type="text" value={{reservasi.ss.ID_sewa}} hidden>
+                <button class="btn btn-success">Verifikasi Pembatalan</button>
+                <br>
+                {% if reservasi.dp.bukti_pembayara != '' %}
+                <a class="btn btn-info my-2" href="{{ reservasi.dp.bukti_pembayaran }}" target="_blank">Lihat Bukti
+                    Bayar</a>
+                {% endif %}
+            </form>
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>Belum ada reservasi</p>
+        {% endif %}
+    </div>
+    <h4><b>Reservasi Dibatalkan</b></h4>
+    <div class="notes-container">
+        {% if dr_batal %}
+        {% for reservasi in dr_batal %}
+        <div class="red-card">
+            <h5><b>{{ reservasi.ss.konsumen.nama }}</b></h5>
+            <p style=font-weight:normal;>Waktu Pemesanan: {{ reservasi.pesan }}</p>
+            <p style=font-weight:normal;>Sarana: {{ reservasi.ss.sarana.nama }}</p>
+            <p style=font-weight:normal;>Jam Booking: {{ reservasi.hari }}, {{ reservasi.ss.jam_booking.0 }}</p>
+            <p style=font-weight:normal;>Biaya: Rp{{ reservasi.ss.biaya }}</p>
+            {% if reservasi.dp.bukti_pembayaran != '' %}
+            <a class="btn btn-info my-2" href="{{ reservasi.dp.bukti_pembayaran }}" target="_blank">Lihat Bukti
+                Bayar</a>
+            {% endif %}
+        </div>
+        {% endfor %}
+        {% else %}
+        <p>Belum ada reservasi</p>
+        {% endif %}
+    </div>
+</div>
 {% endblock content %}
