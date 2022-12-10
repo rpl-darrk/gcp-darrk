@@ -76,7 +76,7 @@ def update_sarana(request, id_sarana):
 
             return render(request, 'mengelola_sarana_olahraga/form.html', {'form': form})
 
-    return HttpResponseRedirect('/mengelola-sarana-olahraga//')
+    return HttpResponseRedirect('/mengelola-sarana-olahraga/')
 
 
 @login_required(login_url='/login/')
