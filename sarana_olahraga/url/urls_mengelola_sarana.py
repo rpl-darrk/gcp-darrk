@@ -13,7 +13,7 @@ urlpatterns = [
     path("delete-sarana/<str:id_sarana>",
          views_mengelola_sarana.delete_sarana, name="delete-sarana"),
     path("atur-jadwal/<str:id_sarana>",
-         views_mengelola_sarana.aturTabelJadwal, name="atur_tabel_jadwal"),
+         views_mengelola_sarana.aturTabelJadwal, name="atur-tabel-jadwal"),
     path("update-jadwal/<str:id_sarana>",
-         views_mengelola_sarana.updateTabelJadwal, name="update_tabel_jadwal"),
+         views_mengelola_sarana.updateTabelJadwal, name="update-tabel-jadwal"),
 ]

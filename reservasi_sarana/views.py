@@ -4,7 +4,7 @@ from .models import *
 from django.contrib.auth.decorators import login_required
 from pengguna.models import *
 from .forms import UploadBuktiPembayaranForm
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.views.decorators.csrf import csrf_exempt
 from sarana_olahraga.models import *
 
@@ -87,21 +87,48 @@ def selesaikanReservasi(request):
 @login_required(login_url='/login/')
 def cekRiwayatReservasi(request):
 
-    context = {}
-
     if request.method == "GET":
-        konsumen = Konsumen_GOR.objects.get(user=request.user)
-        reservasi = Sewa_Sarana.objects.filter(konsumen=konsumen)
+        konsumen_gor = Konsumen_GOR.objects.get(user=request.user)
+        ss = Sewa_Sarana.objects.filter(konsumen=konsumen_gor)
+        dr_menunggu_verif_bayar = []
+        dr_menunggu_verif_batal = []
+        dr_menunggu_pembayaran = []
+        dr_berlangsung = []
+        dr_selesai = []
+        dr_batal = []
+        dict_r = dict()
+        for i in range(ss.count()):
+            dict_r['ss'] = ss[i]
+            dict_r['dp'] = Detail_Pembayaran.objects.get(sewa_sarana = ss[i])
+            dict_r['hari'] = get_hari(ss[i].jam_booking[1])
+            dict_r['pesan'] = ss[i].datetime + timedelta(hours=7)
+            dict_r['gor'] = ss[i].sarana.gor.nama
+            if ss[i].status == '2':
+                dr_batal.append(dict_r.copy())
+            elif ss[i].status == '3':
+                dr_selesai.append(dict_r.copy())
+            elif ss[i].status == '1':
+                if Pembatalan_Sewa_Sarana.objects.filter(sewa_sarana = ss[i]).first() != None:
+                    dr_menunggu_verif_batal.append(dict_r.copy())
+                else:
+                    dr_berlangsung.append(dict_r.copy())
+            elif ss[i].status == '0':
+                if Detail_Pembayaran.objects.get(sewa_sarana = ss[i]).status == '0':
+                    dr_menunggu_pembayaran.append(dict_r.copy())
+                elif Detail_Pembayaran.objects.get(sewa_sarana = ss[i]).status == '1':
+                    dr_menunggu_verif_bayar.append(dict_r.copy())
+        response = {'konsumen_gor': konsumen_gor,
+                    'dr_menunggu_verif_bayar': dr_menunggu_verif_bayar,
+                    'dr_menunggu_verif_batal': dr_menunggu_verif_batal,
+                    'dr_menunggu_pembayaran': dr_menunggu_pembayaran,
+                    'dr_berlangsung': dr_berlangsung,
+                    'dr_selesai': dr_selesai,
+                    'dr_batal': dr_batal}
+        return render(request, 'riwayat_reservasi.html', response)
 
-        list_reservasi = []
-        for i in range(len(reservasi)):
-            list_reservasi += [reservasi[i].ID_sewa]
-
-        context = {
-            'list_reservasi': list_reservasi
-        }
-
-        return render(request, 'riwayat_reservasi.html', context)
+def get_hari(i):
+    hari = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"]
+    return hari[i]
 
 
 @login_required(login_url='/login/')
