@@ -74,6 +74,16 @@ def verifikasiPembatalan(request):
         return HttpResponseRedirect('../../daftar-reservasi')
 
 
+@csrf_exempt
+def selesaikanReservasi(request):
+    if request.method == "POST":
+        ID_sewa = request.POST.get('ID_sewa', None)
+        sewa_sarana, created = Sewa_Sarana.objects.get_or_create(
+            ID_sewa=ID_sewa)
+        sewa_sarana.updateStatus(Status_Sewa_Sarana.DONE)
+        return HttpResponseRedirect('../../daftar-reservasi')
+
+
 @login_required(login_url='/login/')
 def cekRiwayatReservasi(request):
 
