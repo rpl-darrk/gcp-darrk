@@ -131,6 +131,7 @@ class TestViews(TestCase):
             'nama': 'Lapangan RPL Indah 2',
             'url_foto': 'ristek.link/GOR-RPL-Keren',
             'jenis': 'Lapangan Basket',
+            'biaya': '0.0',
             'deskripsi': 'Lapangan RPL Indah merupakan lapangan kedua yang ada di GOR RPL Keren'
         })
         new_project = Sarana.objects.get(ID_sarana__exact=2)
@@ -218,6 +219,7 @@ class TestViews(TestCase):
             'nama': 'Lapangan RPL Indah 1',
             'url_foto': 'ristek.link/GOR-RPL-Keren',
             'jenis': 'Lapangan Basket',
+            'biaya': '0.0',
             'deskripsi': 'Lapangan RPL Indah merupakan lapangan pertama yang ada di GOR RPL Keren'
         })
         new_project = Sarana.objects.get(ID_sarana__exact=1)

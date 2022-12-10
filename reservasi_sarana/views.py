@@ -68,8 +68,8 @@ def reservasi(request, ID_gor, ID_sarana, waktu):
                 sewa_list = Sewa_Sarana.objects.all()
                 id_max = 0
                 for i in sewa_list:
-                    if id_max<i.ID_sewa:
-                        id_max = i.ID_sewa
+                    if id_max<int(i.ID_sewa):
+                        id_max = int(i.ID_sewa)
                 ID_Sewa = id_max + 1
 
                 sewa_sarana = Sewa_Sarana.objects.create(
@@ -77,6 +77,7 @@ def reservasi(request, ID_gor, ID_sarana, waktu):
                     sarana=sarana,
                     konsumen=konsumen,
                     pengurus=gor.pengurus,
+                    biaya=sarana.biaya,
                     jam_booking=["%s-%s" % (jam_mulai, jam_selesai), hari]
                 )
                 sewa_sarana.save()
