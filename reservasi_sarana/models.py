@@ -89,7 +89,7 @@ class Sewa_Sarana(models.Model):
 class Detail_Pembayaran(models.Model):
     sewa_sarana = models.ForeignKey(
         Sewa_Sarana, on_delete=models.CASCADE, blank=True, null=True)
-    datetime = models.DateTimeField(auto_now_add=True)
+    datetime = models.DateTimeField(blank=True, null=True)
     status = models.TextField(default=Status_Detail_Pembayaran.NOTYET)
     bukti_pembayaran = models.TextField(blank=True, null=True)
 
@@ -99,7 +99,6 @@ class Detail_Pembayaran(models.Model):
 
 
 class Pembatalan_Sewa_Sarana(models.Model):
-    ID_pembatalan = models.TextField(primary_key=True)
     datetime = models.DateTimeField(auto_now_add=True)
     pembatal = models.ForeignKey(
         Pengguna,  on_delete=models.CASCADE, blank=True, null=True)

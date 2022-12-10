@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+{% endblock meta %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <div style="text-align:center">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Unggah Bukti Bayar</title>
+    <style>
+      .button {
+        background-color: #0da126; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        border-radius: 8px;
+      }
+    </style>
+  </head>
+  <body>
+      <div class="header">
+        <br>
+      <h1>Form Unggah Bukti Pembayaran</h1>
+      <br>
+    </div>
+    <div class="form_container">
+        <form action="" method="POST">
+            <div class="row">
+              <div class="data">
+                  <h5>Reservasi untuk: {{ hari }}, {{ jam }}</h5>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="data">
+                    <h5>URL Bukti Pembayaran</h5>
+                    {% csrf_token %}
+                    <input style="width: 400px;" type="text" name="bukti_pembayaran" placeholder="Masukkan URL Discord bukti pembayaran Anda di sini." required>
+                    <br>
+                    <br>
+                    <P><input type="submit" value="Simpan" class="btn btn-success"></P>
+                </div>
+            </div>
+        </form>
+    </div>
+  </body>
+</div>
+</html>
+{% endblock content %}
