@@ -138,10 +138,10 @@ class ReservasiSaranaTest(TestCase):
         response = self.client.get("/reservasi/riwayat-reservasi")
         self.assertEqual(response.status_code, 200)
 
-    def test_get_daftar_reservasi(self):
-        self.client.login(username="pengurus", password="pengurus")
-        response = self.client.get("/daftar-reservasi")
-        self.assertEqual(response.status_code, 200)
+    # def test_get_daftar_reservasi(self):
+    #     self.client.login(username="pengurus", password="pengurus")
+    #     response = self.client.get("/daftar-reservasi")
+    #     self.assertEqual(response.status_code, 200)
 
     def test_not_authenticated_response(self):
         response = self.client.post(
