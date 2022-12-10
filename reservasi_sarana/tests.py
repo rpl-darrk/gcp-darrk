@@ -138,6 +138,12 @@ class ReservasiSaranaTest(TestCase):
             "/jadwal/%s/%s/reservasi/%s" % ("1", "1", "1|10.00|11.00"))
         self.assertEqual(response.status_code, 302)
 
+    def test_not_authenticated_response(self):
+        self.client.login(username="konsumen", password="konsumen")
+        response = self.client.post(
+            "/jadwal/%s/%s/reservasi/%s" % ("1", "1", "1|10.00|11.00"))
+        self.assertEqual(response.status_code, 302)
+
     def test_get_method_response(self):
         self.client.login(username="konsumen", password="konsumen")
         response = self.client.get(

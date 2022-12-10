@@ -41,6 +41,7 @@ class Sarana(models.Model):
     url_foto = models.CharField(max_length=200)
     jenis = models.CharField(max_length=200, choices=SaranaType.choices)
     deskripsi = models.TextField(max_length=None)
+    biaya = biaya = models.FloatField(default=0)
 
     def get_sewa_sarana(self):
         return self.sewa_sarana_set.all()

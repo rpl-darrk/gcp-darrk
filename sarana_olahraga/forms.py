@@ -5,7 +5,7 @@ from .models import Sarana
 class SaranaForm(forms.ModelForm):
     class Meta:
         model = Sarana
-        fields = ('nama', 'url_foto', 'jenis', 'deskripsi')
+        fields = ('nama', 'url_foto', 'jenis', 'biaya', 'deskripsi')
 
         widgets = {
             'nama': forms.TextInput(
@@ -19,5 +19,8 @@ class SaranaForm(forms.ModelForm):
             ),
             'deskripsi': forms.Textarea(
                 attrs={'placeholder': 'Deskripsi dari Sarana', 'style': 'width: 300px;', 'class': 'form-control'}
+            ),
+            'biaya': forms.TextInput(
+                attrs={'placeholder': 'Biaya Sarana per reservasi', 'style': 'width: 300px;', 'class': 'form-control', 'type': 'number'}
             )
         }
