@@ -32,13 +32,15 @@
                 {% for element in waktu %}
                 {% if element.status == "Tersedia" %}
                 <td>
-                    <a href="../../../reservasi/{{ element.waktu }}" class="btn btn-primary">
-                        Booking</a>
+                    <form action="reservasi/{{ element.waktu }}" method="POST">
+                        {% csrf_token %}
+                        <button class="btn btn-primary">Booking</button>
+                    </form>
                 </td>
-                {% elif element.status is not None  %}
-                    <td class="font-weight-bold">{{ element.status }}</td>
+                {% elif element.status is not None %}
+                <td class="font-weight-bold">{{ element.status }}</td>
                 {% else %}
-                    <td class="font-weight-bold">{{ element }}</td>
+                <td class="font-weight-bold">{{ element }}</td>
                 {% endif %}
                 {% endfor %}
             </tr>

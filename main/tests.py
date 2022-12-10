@@ -9,11 +9,10 @@ class GorListAuthenticateBeforeAccess(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username="foo", password="bar")
 
-    def testHome(self):
+    def test_gorList(self):
         self.client.login(username="foo", password="bar")
         response = self.client.get("/daftar-gor")
         assert (response.status_code.__eq__(200))
-
 
 @tag("functional")
 class FunctionalTestCase(LiveServerTestCase):

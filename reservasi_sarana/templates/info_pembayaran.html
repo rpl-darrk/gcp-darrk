@@ -6,7 +6,20 @@
 {% endblock meta %}
 
 {% block content %}
-<div class="container">
+<div class="container" style="height: 75vh; display: flex; justify-content: center; align-items: center;">
+    <div class="card" style="width: 18rem; background-color: #c1f7b6;">
+        <div class="card-header">
+            <h5 class="card-title" style="font-weight: bolder;">Detail Pembayaran</h5>
+            <h6 class="card-subtitle text-muted">{{ sarana.nama }}</h6>
+        </div>
+        <div class="card-body" style="background-color: #e8fce4;">
+            <div>
+                <p class="card-text">Lakukan pembayaran ke {{ pengurus_gor.akun_bank }} sebesar {{ sewa_sarana.biaya }}
+                    sebelum {{ batas_waktu }}</p>
+                <a href="/unggah-bukti-bayar/{{sewa_sarana.ID_sewa}}" class="card-link" style="color: #10a424;">Upload bukti</a>
+            </div>
 
+        </div>
+    </div>
 </div>
 {% endblock content %}

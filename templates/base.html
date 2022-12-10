@@ -11,7 +11,9 @@
     integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="shortcut icon" type="image/png" href="{% static 'img/logo-gcp.png' %}"/>
   <title>Gor Center Platform</title>
+
 
   {% block meta %}
   {% endblock meta %}
@@ -33,6 +35,9 @@
             <a class="nav-link" href="/">Home</a>
           </li>
           {% if request.session.role == 'PENGURUS' %}
+          <li class="nav-item">
+            <a class="nav-link" href="/daftar-gor">Daftar GOR</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="/daftar-reservasi">Daftar Reservasi</a>
           </li>

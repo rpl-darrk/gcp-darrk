@@ -19,7 +19,7 @@ urlpatterns = [
          name='get_daftar_reservasi'),
     path('unggah-bukti-bayar/<str:ID_sewa>', views.simpan_bukti_pembayaran,
          name='simpan_bukti_pembayaran'),
-    path("reservasi/<str:ID_gor>/<str:ID_sarana>/<str:waktu>",
+    path("jadwal/<str:ID_gor>/<str:ID_sarana>/reservasi/<str:waktu>",
          views.reservasi, name="buat_reservasi"),
     path("info-pembayaran/<str:ID_sewa>",
          views.detail_pembayaran, name="detail_bayar")
