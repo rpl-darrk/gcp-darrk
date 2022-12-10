@@ -1,27 +1,7 @@
-from django.shortcuts import render, redirect
-from django.views import defaults
-from ..models import Jadwal_Reservasi, Sarana
+from django.shortcuts import render
+from ..models import Sarana
 from datetime import datetime, timezone
 from django.http import HttpResponseRedirect
-
-
-def reservasi(request, id_jadwal):
-    if request.user.is_authenticated:
-        if request.method == "POST":
-            jadwal_reservasi = Jadwal_Reservasi.objects.get(
-                ID_jadwal=id_jadwal)
-
-            # if (jadwal_reservasi.status.__eq__(Status_Reservasi.VACANT)):
-            #     jadwal_reservasi.status = Status_Reservasi.ORDERED
-            #     jadwal_reservasi.save()
-            #     return render(request, "reservasi_berhasil.html")
-            # else:
-            #     return render(request, "reservasi_gagal.html")
-            return render(request, "reservasi_berhasil.html")
-        else:
-            return defaults.page_not_found(request, None)
-    else:
-        return redirect("login")
 
 
 def get_jadwal_reservasi(request, id_gor, id_sarana):
